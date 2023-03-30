@@ -147,7 +147,7 @@ let isMoveStart = false;
 const moveTouch = (e) => {
   console.log('moveTouch');
   e.preventDefault();
-  if (isTouchStart) {
+  if (isTouchStart || isMoveStart) {
     target_focus.style.left = `${e.touches[0].clientX - touchOffsetX}px`;
     target_focus.style.top = `${e.touches[0].clientY - touchOffsetY}px`;
     click_works = false;
