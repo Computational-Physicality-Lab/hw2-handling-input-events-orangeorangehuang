@@ -148,6 +148,7 @@ let isDragStart = false;
 let isMoveStart = false;
 let isTouched = false;
 let touch_works = true;
+let isDoubleClick = false;
 
 const moveTouch = (e) => {
   console.log('moveTouch');
@@ -184,6 +185,7 @@ const doubleTouchTarget = (e) => {
   console.log('doubleTouchTarget');
   e.preventDefault();
   isMoveStart = true;
+  isDoubleClick = true;
   document.getElementById('debug').innerText = touchOffsetX;
   document.addEventListener('touchmove', moveTouch);
 };
@@ -249,16 +251,21 @@ workspace.addEventListener(
 workspace.addEventListener(
   'touchend',
   (e) => {
-    console.log('ws touchstart');
+    console.log('ws touchstart', isMoveStart);
     e.preventDefault();
-    if (isMoveStart) {
+    if (!isDoubleClick && isMoveStart) {
       let date = new Date();
       let time = date.getTime();
+      console.log(time - lastClickWS);
       if (time - lastClickWS < 200) {
+        console.log('ws touchstart cancel');
         isMoveStart = false;
+        isDoubleClick = false;
+        document.removeEventListener('touchmove', moveTouch);
       }
     } else {
       touchWorkspace(e);
+      isDoubleClick = false;
     }
   },
   false
