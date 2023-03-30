@@ -142,6 +142,7 @@ document.addEventListener(
 let touchOffsetX = 0;
 let touchOffsetY = 0;
 let isTouchStart = false;
+let isMoveStart = false;
 
 const moveTouch = (e) => {
   console.log('moveTouch');
@@ -156,7 +157,7 @@ const moveTouch = (e) => {
 const touchWorkspace = (e) => {
   console.log('touchWorkspace', click_works, isTouchStart);
   e.preventDefault();
-  if (click_works && !isTouchStart) {
+  if (click_works && !isMoveStart) {
     clearAllSelectBoxes();
   }
   click_works = true;
@@ -164,7 +165,7 @@ const touchWorkspace = (e) => {
 
 const doubleTouchTarget = (e) => {
   e.preventDefault();
-  isTouchStart = true;
+  isMoveStart = true;
   document.getElementById("debug").innerText = touchOffsetX;
   document.addEventListener('touchmove', moveTouch);
 };
@@ -179,7 +180,7 @@ targets.forEach((target) => {
       let date = new Date();
       let time = date.getTime();
       const time_between_taps = 200; // 200ms
-
+      isTouchStart = true;
       target_focus = target;
       touchOffsetX = e.touches[0].clientX - target.offsetLeft
       touchOffsetY = e.touches[0].clientY - target.offsetTop
