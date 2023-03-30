@@ -55,7 +55,7 @@ const clickTarget = (e) => {
   if (click_works) {
     console.log('click (' + e.detail + ')');
     clearAllSelectBoxes();
-    target_focus.style.backgroundColor = '#000';
+    target_focus.style.backgroundColor = '#00f';
   }
   click_works = true;
 };
