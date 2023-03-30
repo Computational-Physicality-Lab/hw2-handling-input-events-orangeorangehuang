@@ -139,27 +139,24 @@ document.addEventListener(
 );
 
 // Touch Events
-const processTouchstart = (ev) => {
-  document.getElementById("debug").innerText = ev.touches.length;
-  switch (ev.touches.length) {
-    case 1:
-      clickTarget(ev);
-      break;
-    case 2:
-      doubleClickTarget(ev);
-      break;
-    default:
-      break;
-  }
-};
 
+let lastClick = 0;
 targets.forEach((target) => {
   target.addEventListener(
     'touchstart',
     (e) => {
       console.log('touchstart');
+      e.preventDefault();
+      let date = new Date();
+      let time = date.getTime();
+      const time_between_taps = 200; // 200ms
+
       target_focus = target;
-      processTouchstart(e);
+      clickTarget(e);
+      if (time - lastClick < time_between_taps) {
+        doubleClickTarget(e);
+      }
+      lastClick = time;
     },
     false
   );
