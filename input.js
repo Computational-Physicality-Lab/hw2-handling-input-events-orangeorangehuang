@@ -55,7 +55,7 @@ const clickTarget = (e) => {
   if (click_works) {
     console.log('click (' + e.detail + ')');
     clearAllSelectBoxes();
-    target_focus.style.backgroundColor = '#000';
+    target_focus.style.backgroundColor = '#00f';
   }
   click_works = true;
 };
@@ -65,7 +65,7 @@ const doubleClickTarget = (e) => {
   offsetX = e.offsetX;
   offsetY = e.offsetY;
   document.addEventListener('mousemove', move);
-  target_focus.style.backgroundColor = '#00f';
+  target_focus.style.backgroundColor = '#000';
 };
 
 targets.forEach((target) => {
