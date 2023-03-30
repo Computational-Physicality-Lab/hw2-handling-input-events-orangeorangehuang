@@ -154,7 +154,7 @@ const moveTouch = (e) => {
 };
 
 const touchWorkspace = (e) => {
-  console.log('clickWorkspace', click_works);
+  console.log('touchWorkspace', click_works, isTouchStart);
   e.preventDefault();
   if (click_works && !isTouchStart) {
     clearAllSelectBoxes();
@@ -176,7 +176,6 @@ targets.forEach((target) => {
     (e) => {
       console.log('touchstart');
       e.preventDefault();
-      isTouchStart = true;
       let date = new Date();
       let time = date.getTime();
       const time_between_taps = 200; // 200ms
