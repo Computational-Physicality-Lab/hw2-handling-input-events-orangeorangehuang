@@ -209,9 +209,14 @@ targets.forEach((target) => {
     'touchend',
     (e) => {
       e.preventDefault();
-      // console.log('touchend');
-      // target_focus = target;
-      // clickTarget(e);
+      let date = new Date();
+      let time = date.getTime();
+      const time_between_taps = 200; // 200ms
+      if (time - lastClick < time_between_taps) {
+        isTouchStart = false;
+        isMoveStart = false;
+      }
+      lastClick = time;
     },
     false
   );
