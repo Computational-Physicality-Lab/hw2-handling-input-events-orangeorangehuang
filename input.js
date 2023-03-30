@@ -126,6 +126,17 @@ targets.forEach((target) => {
   );
 
   target.addEventListener(
+    'touchmove',
+    (e) => {
+      e.preventDefault();
+      console.log('touchmove');
+      target_focus = target;
+      move(e);
+    },
+    false
+  );
+
+  target.addEventListener(
     'touchend',
     (e) => {
       e.preventDefault();
