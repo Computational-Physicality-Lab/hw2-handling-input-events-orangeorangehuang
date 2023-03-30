@@ -82,6 +82,7 @@ targets.forEach((target) => {
       offsetX = e.offsetX
       offsetY = e.offsetY
       document.addEventListener('mousemove', move);
+      target.style.backgroundColor = '#00f';
     },
     false
   );
