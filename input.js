@@ -44,7 +44,7 @@ const resetMove = (e) => {
 
 const clickWorkspace = (e) => {
   console.log('clickWorkspace', click_works);
-  e.preventDefault()
+  e.preventDefault();
   if (click_works) {
     clearAllSelectBoxes();
   }
@@ -60,29 +60,33 @@ const clickTarget = (e) => {
   click_works = true;
 };
 
+const doubleClickTarget = (e) => {
+  isDown = true;
+  offsetX = e.offsetX;
+  offsetY = e.offsetY;
+  document.addEventListener('mousemove', move);
+  target_focus.style.backgroundColor = '#00f';
+};
+
 targets.forEach((target) => {
   target.addEventListener(
-    'click', 
+    'click',
     (e) => {
       console.log('click', click_works);
-      e.preventDefault()
+      e.preventDefault();
       target_focus = target;
       clickTarget(e);
-    }, 
+    },
     false
   );
 
   target.addEventListener(
-    'dblclick', 
+    'dblclick',
     (e) => {
-      e.preventDefault()
       console.log('dblclick');
-      isDown = true;
+      e.preventDefault();
       target_focus = target;
-      offsetX = e.offsetX
-      offsetY = e.offsetY
-      document.addEventListener('mousemove', move);
-      target.style.backgroundColor = '#00f';
+      doubleClickTarget(e);
     },
     false
   );
@@ -90,7 +94,7 @@ targets.forEach((target) => {
   target.addEventListener(
     'mousedown',
     (e) => {
-      e.preventDefault()
+      e.preventDefault();
       console.log('mousedown');
       isDown = true;
       target_focus = target;
@@ -114,14 +118,46 @@ targets.forEach((target) => {
     },
     false
   );
+});
 
+workspace.addEventListener('click', clickWorkspace, true);
+
+document.addEventListener(
+  'keydown',
+  (e) => {
+    console.log('keydown');
+    e.preventDefault();
+    if (e.key === 'Escape' || e.key === 'Esc') {
+      console.log('esc');
+      resetMove(e);
+      return false;
+    }
+  },
+  false
+);
+
+// Touch Events
+const processTouchstart = (ev) => {
+  switch (ev.touches.length) {
+    case 1:
+      clickTarget(ev);
+      break;
+    case 2:
+      doubleClickTarget(ev);
+      break;
+    default:
+      break;
+  }
+};
+
+targets.forEach((target) => {
   target.addEventListener(
     'touchstart',
     (e) => {
       e.preventDefault();
       console.log('touchstart');
       target_focus = target;
-      clickTarget(e);
+      processTouchstart(e);
     },
     false
   );
@@ -148,19 +184,3 @@ targets.forEach((target) => {
     false
   );
 });
-
-workspace.addEventListener('click', clickWorkspace, true);
-
-document.addEventListener(
-  'keydown',
-  (e) => {
-    console.log('keydown');
-    e.preventDefault();
-    if (e.key === 'Escape' || e.key === 'Esc') {
-      console.log('esc');
-      resetMove(e);
-      return false;
-    }
-  }, 
-  false
-);
