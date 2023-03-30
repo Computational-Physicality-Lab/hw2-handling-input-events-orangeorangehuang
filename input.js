@@ -138,6 +138,7 @@ document.addEventListener(
 
 // Touch Events
 const processTouchstart = (ev) => {
+  document.getElementById("debug").innerText = ev.touches.length;
   switch (ev.touches.length) {
     case 1:
       clickTarget(ev);
