@@ -155,7 +155,6 @@ targets.forEach((target) => {
   target.addEventListener(
     'touchstart',
     (e) => {
-      e.preventDefault();
       console.log('touchstart');
       target_focus = target;
       processTouchstart(e);
