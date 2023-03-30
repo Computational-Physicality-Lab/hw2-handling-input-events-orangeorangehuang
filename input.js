@@ -52,6 +52,7 @@ const clickWorkspace = (e) => {
 };
 
 const clickTarget = (e) => {
+  e.preventDefault();
   if (click_works) {
     console.log('click (' + e.detail + ')');
     clearAllSelectBoxes();
@@ -61,6 +62,7 @@ const clickTarget = (e) => {
 };
 
 const doubleClickTarget = (e) => {
+  e.preventDefault();
   isDown = true;
   offsetX = e.offsetX;
   offsetY = e.offsetY;
