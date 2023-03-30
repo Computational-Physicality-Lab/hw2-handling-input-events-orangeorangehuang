@@ -153,6 +153,15 @@ const moveTouch = (e) => {
   }
 };
 
+const touchWorkspace = (e) => {
+  console.log('clickWorkspace', click_works);
+  e.preventDefault();
+  if (click_works && !isTouchStart) {
+    clearAllSelectBoxes();
+  }
+  click_works = true;
+};
+
 const doubleTouchTarget = (e) => {
   e.preventDefault();
   isTouchStart = true;
@@ -200,11 +209,11 @@ targets.forEach((target) => {
     'touchend',
     (e) => {
       e.preventDefault();
-      console.log('touchend');
-      target_focus = target;
-      clickTarget(e);
+      // console.log('touchend');
+      // target_focus = target;
+      // clickTarget(e);
     },
     false
   );
 });
-workspace.addEventListener('touchstart', clickWorkspace, true);
+workspace.addEventListener('touchstart', touchWorkspace, true);
