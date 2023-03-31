@@ -140,12 +140,6 @@ document.addEventListener(
   false
 );
 
-
-
-
-
-
-
 // Touch Events
 
 let touchOffsetX = 0;
@@ -154,13 +148,13 @@ let originalOffsetX = 0;
 let originalOffsetY = 0;
 let touchFocusTarget = null;
 let touchState = 'pending';
-// touchState: 
-  // pending
-  // touchingTarget
-  // focused
-  // doubleTouchingTarget: Double clicked but not yet start moving 
-  // movingTarget
-  // dragingTarget
+// touchState:
+// pending
+// touchingTarget
+// focused
+// doubleTouchingTarget: Double clicked but not yet start moving
+// movingTarget
+// dragingTarget
 
 const touchMove = (e) => {
   e.preventDefault();
@@ -238,6 +232,14 @@ workspace.addEventListener(
 
     let date = new Date();
     touchStartTimeWS = date.getTime();
+
+    if (touchState === 'focused') {
+      document.getElementById('debug').innerText = e.touches.length;
+      if (e.touches.length >= 1) {
+        // Resize
+        document.getElementById('debug').innerText = 'Resizing';
+      }
+    }
   },
   false
 );
@@ -252,49 +254,41 @@ workspace.addEventListener(
 
     if (touchState === 'doubleTouchingTarget') {
       touchState = 'movingTarget';
-    } 
-    else if (touchState === 'movingTarget') {
+    } else if (touchState === 'movingTarget') {
       document.getElementById('debug').innerText = e.touches.length;
       if (e.touches.length >= 1) {
         // Abort
         touchFocusTarget.style.left = `${originalOffsetX}px`;
         touchFocusTarget.style.top = `${originalOffsetY}px`;
         touchFocusTarget = null;
-      }
-      else if (time - touchStartTimeWS < 200) {
+      } else if (time - touchStartTimeWS < 200) {
         touchState = 'pending';
         document.removeEventListener('touchmove', touchMove);
       }
-    } 
-    else if (touchState === 'dragingTarget') {
+    } else if (touchState === 'dragingTarget') {
       document.getElementById('debug').innerText = e.touches.length;
       if (e.touches.length >= 1) {
         // Abort
         touchFocusTarget.style.left = `${originalOffsetX}px`;
         touchFocusTarget.style.top = `${originalOffsetY}px`;
         touchFocusTarget = null;
-      }
-      else {
+      } else {
         touchState = 'pending';
       }
-    } 
-    else if (touchState === 'touchingTarget') {
+    } else if (touchState === 'touchingTarget') {
       touchState = 'focused';
-    } 
-    else if (touchState === 'focused') {
+    } else if (touchState === 'focused') {
       document.getElementById('debug').innerText = e.touches.length;
-      if (e.touches.length >= 1) {
-        // Resize
-        document.getElementById('debug').innerText = "Resizing";
-      }
-      else {
+      // if (e.touches.length >= 1) {
+      //   // Resize
+      //   document.getElementById('debug').innerText = 'Resizing';
+      // } else {
         clearAllSelectBoxes();
-        touchState = "pending";
-      }
-    }
-    else if (touchState === 'pending') {
+        touchState = 'pending';
+      // }
+    } else if (touchState === 'pending') {
       clearAllSelectBoxes();
-      touchState = "pending";
+      touchState = 'pending';
     }
   },
   false
