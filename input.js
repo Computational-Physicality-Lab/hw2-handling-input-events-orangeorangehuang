@@ -242,8 +242,8 @@ workspace.addEventListener(
       touchResizingTimeWS = time;
       if (e.touches.length == 1) {
         // Resize
-        document.getElementById('debug').innerText = 'Resizing:' + e.touches.length;
-        touchState = "resizing"
+        document.getElementById('debug').innerText = 'Before Resizing:' + e.touches.length;
+        // touchState = "resizing"
       } else if (e.touches.length == 2 || time - touchStartTimeWS < 200) {
         // Resize
         document.getElementById('debug').innerText = 'Resizing:' + e.touches.length;
