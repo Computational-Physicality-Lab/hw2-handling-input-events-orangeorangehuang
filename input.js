@@ -239,12 +239,11 @@ workspace.addEventListener(
       if (e.touches.length == 2) {
         // Resize
         document.getElementById('debug').innerText = 'Resizing:' + e.touches.length;
-        // touchState = "resizing"
+        touchState = "resizing"
       } else if (e.touches.length == 1) {
         // Resize
         // document.getElementById('debug').innerText = 'Resizing:' + e.touches.length;
-      }
-      else {
+      } else {
         clearAllSelectBoxes();
         touchState = 'pending';
       }
@@ -287,19 +286,14 @@ workspace.addEventListener(
     } else if (touchState === 'touchingTarget') {
       touchState = 'focused';
     } else if (touchState === 'focused') {
+      clearAllSelectBoxes();
+      touchState = 'pending';
+    } else if (touchState === 'resizing') {
       document.getElementById('debug').innerText = e.touches.length;
       if (e.touches.length == 1) {
         // Resize
         document.getElementById('debug').innerText = 'Resizing:' + e.touches.length;
       }
-      // document.getElementById('debug').innerText = e.touches.length;
-      // if (e.touches.length >= 1) {
-      //   // Resize
-      //   document.getElementById('debug').innerText = 'Touchend Resizing';
-      // } else {
-      //   clearAllSelectBoxes();
-      //   touchState = 'pending';
-      // }
     } else if (touchState === 'pending') {
       clearAllSelectBoxes();
       touchState = 'pending';
