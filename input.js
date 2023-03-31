@@ -370,6 +370,8 @@ workspace.addEventListener(
         resizeOffsetY = originalOffsetY;
         touchFocusTarget = null;
         clearAllSelectBoxes();
+      } else if (touchFocusTarget != null) {
+        touchState = 'focused';
       } else {
         touchState = 'pending';
       }
