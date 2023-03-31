@@ -398,7 +398,7 @@ workspace.addEventListener(
         // Abort
         touchOperateTarget.style.left = `${dragOriginalX}px`;
         touchOperateTarget.style.top = `${dragOriginalY}px`;
-        if (touchFocusTarget != null) {
+        if (touchFocusTarget !== null) {
           if (touchOperateTarget === touchFocusTarget){
             resizeX = dragOriginalX;
             resizeY = dragOriginalY;
@@ -408,10 +408,10 @@ workspace.addEventListener(
           touchState = 'focused';
         }
         else {
+          document.getElementById('debug').innerText = 'pending';
           touchState = 'pending';
         }
         touchOperateTarget = null;
-        document.removeEventListener('touchmove', touchMove);
       }
     } 
     else if (touchState === 'touchingTarget') {
