@@ -146,6 +146,8 @@ document.addEventListener(
 // 
 // 
 // 
+// 
+// 
 // Touch Events
 
 let touchOffsetX = 0;
@@ -257,11 +259,9 @@ let touchResizeY2 = 0;
 
 const touchResizing = (e) => {
   if (touchState != "resizing") return;
-
   let dx_init = (touchResizeX1 - touchResizeX2 > 0)? touchResizeX1 - touchResizeX2: touchResizeX2 - touchResizeX1;
   let dy_init = (touchResizeY1 - touchResizeY2 > 0)? touchResizeY1 - touchResizeY2: touchResizeY2 - touchResizeY1;
   let direction = (dx_init > dy_init)? "x" : "y";
-
   let x1 = e.touches[0].clientX;
   let y1 = e.touches[0].clientY;
   let x2 = e.touches[1].clientX;
@@ -269,12 +269,10 @@ const touchResizing = (e) => {
   let dx = (x1 - x2 > 0)? (x1 - x2 - dx_init)/10: (x2 - x1 - dx_init)/10;
   let dy = (y1 - y2 > 0)? (y1 - y2 - dy_init)/10: (y2 - y1 - dy_init)/10;
 
-  let x_max = window.innerWidth;
-  let y_max = window.innerHeight;
   if (direction == "x") {
     let x_prime = resizeOffsetX - dx/2;
     let width_prime = resizeWidth + dx;
-    if (x_prime >= 0 && x_prime + width_prime <= x_max && width_prime > 20){
+    if (x_prime >= 0 && x_prime + width_prime <= window.innerWidth && width_prime > 20){
       touchFocusTarget.style.left = `${x_prime}px`;
       touchFocusTarget.style.width = `${width_prime}px`;
       resizeOffsetX = x_prime;
@@ -283,21 +281,19 @@ const touchResizing = (e) => {
   } else {
     let y_prime = resizeOffsetY - dy/2;
     let height_prime = resizeHeight + dy;
-    if (y_prime >= 0 && y_prime + height_prime <= y_max && height_prime > 20){
+    if (y_prime >= 0 && y_prime + height_prime <= window.innerHeight && height_prime > 20){
       touchFocusTarget.style.top = `${y_prime}px`;
       touchFocusTarget.style.height = `${height_prime}px`;
       resizeOffsetY = y_prime;
       resizeHeight = height_prime;
     } 
   }
-  // document.getElementById('debug').innerText = 'touchResizing (X): ' + x_max + " " + y_max;
 };
 
 workspace.addEventListener(
   'touchstart',
   (e) => {
     e.preventDefault();
-
     let date = new Date();
     let time = date.getTime(); 
     touchStartTimeWS = time;
@@ -306,7 +302,7 @@ workspace.addEventListener(
       console.log(e.touches[0])
       touchResizingTimeWS = time;
       if (e.touches.length == 1) {
-        // Resize
+        // Before Resize
         touchResizeX1 = e.touches[0].clientX;
         touchResizeY1 = e.touches[0].clientY;
       } else if (e.touches.length == 1 && time - touchStartTimeWS < 200) {
@@ -348,7 +344,6 @@ workspace.addEventListener(
     e.preventDefault();
     let date = new Date();
     let time = date.getTime();
-    console.log('ws touchend :', time - touchStartTimeWS, touchState);
 
     if (touchState === 'doubleTouchingTarget') {
       touchState = 'movingTarget';
@@ -374,8 +369,9 @@ workspace.addEventListener(
         touchFocusTarget.style.top = `${originalOffsetY}px`;
         resizeOffsetX = originalOffsetX;
         resizeOffsetY = originalOffsetY;
-        touchFocusTarget = null;
-        clearAllSelectBoxes();
+        // touchFocusTarget = null;
+        // clearAllSelectBoxes();
+        touchState = 'focused';
       } else if (touchFocusTarget != null) {
         originalOffsetX = touchFocusTarget.offsetLeft;
         originalOffsetY = touchFocusTarget.offsetTop;
