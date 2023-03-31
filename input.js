@@ -262,8 +262,8 @@ const touchResizing = (e) => {
   let y1 = e.touches[0].clientY;
   let x2 = e.touches[1].clientX;
   let y2 = e.touches[1].clientY;
-  let dx = (x1 - x2 > 0)? (x1 - x2 - dx_init)/5: (x2 - x1 - dx_init)/5;
-  let dy = (y1 - y2 > 0)? (y1 - y2 - dy_init)/5: (y2 - y1 - dy_init)/5;
+  let dx = (x1 - x2 > 0)? (x1 - x2 - dx_init)/10: (x2 - x1 - dx_init)/10;
+  let dy = (y1 - y2 > 0)? (y1 - y2 - dy_init)/10: (y2 - y1 - dy_init)/10;
 
   let x_max = window.innerWidth;
   let y_max = window.innerHeight;
