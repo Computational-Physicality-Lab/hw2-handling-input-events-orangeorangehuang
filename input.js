@@ -154,6 +154,8 @@ let originalOffsetX = 0;
 let originalOffsetY = 0;
 let resizeOffsetX = 0;
 let resizeOffsetY = 0;
+let originalWidth = 0;
+let originalHeight = 0;
 let resizeWidth = 0;
 let resizeHeight = 0;
 let touchFocusTarget = null;
@@ -197,6 +199,8 @@ targets.forEach((target) => {
       resizeOffsetY = target.offsetTop;
       resizeWidth = target.offsetWidth;
       resizeHeight = target.offsetHeight;
+      originalWidth = target.offsetWidth;
+      originalHeight = target.offsetHeight;
     },
     false
   );
@@ -286,7 +290,7 @@ const touchResizing = (e) => {
       resizeHeight = height_prime;
     } 
   }
-  document.getElementById('debug').innerText = 'touchResizing (X): ' + x_max + " " + y_max;
+  // document.getElementById('debug').innerText = 'touchResizing (X): ' + x_max + " " + y_max;
 };
 
 workspace.addEventListener(
@@ -321,6 +325,10 @@ workspace.addEventListener(
         touchState = "resizing"
       } else if (e.touches.length == 3) {
         // Abort
+        touchFocusTarget.style.left = `${originalOffsetX}px`;
+        touchFocusTarget.style.top = `${originalOffsetY}px`;
+        touchFocusTarget.style.width = `${originalWidth}px`;
+        touchFocusTarget.style.height = `${originalHeight}px`;
         touchFocusTarget = null;
         clearAllSelectBoxes();
         touchState = "pending";
