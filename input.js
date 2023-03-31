@@ -238,7 +238,11 @@ workspace.addEventListener(
       if (e.touches.length == 2) {
         // Resize
         document.getElementById('debug').innerText = 'Resizing:' + e.touches.length;
-      } else {
+      } else if (e.touches.length == 1) {
+        // Resize
+        document.getElementById('debug').innerText = 'Resizing:' + e.touches.length;
+      }
+      else {
         clearAllSelectBoxes();
         touchState = 'pending';
       }
