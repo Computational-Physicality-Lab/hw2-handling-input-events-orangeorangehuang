@@ -213,7 +213,6 @@ targets.forEach((target) => {
       e.preventDefault();
       console.log('touchmove');
       touchState = 'dragingTarget';
-      // document.removeEventListener('touchmove', touchMove);
       touchMove(e);
     },
     false
@@ -329,7 +328,7 @@ workspace.addEventListener(
         touchFocusTarget = null;
         clearAllSelectBoxes();
         touchState = "pending";
-        workspace.removeEventListener("touchmove", touchResizing, false);
+       
       } else {
         clearAllSelectBoxes();
         touchState = 'pending';
@@ -391,9 +390,7 @@ workspace.addEventListener(
       touchState = 'pending';
     } 
     else if (touchState === 'resizing') {
-      if (e.touches.length == 1) {
-        // Resize
-      } else if (e.touches.length == 0) {
+      if (e.touches.length == 0) {
         touchState = "focused";
       }
     } else if (touchState === 'pending') {
