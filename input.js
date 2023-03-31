@@ -235,10 +235,10 @@ workspace.addEventListener(
     touchStartTimeWS = date.getTime();
 
     if (touchState === 'focused') {
-      document.getElementById('debug').innerText = e.touches.length;
+      document.getElementById('debug').innerText = e.touches;
       if (e.touches.length == 2) {
         // Resize
-        document.getElementById('debug').innerText = 'Resizing:' + e.touches.length;
+        document.getElementById('debug').innerText = 'Resizing:' + e.touches;
         touchState = "resizing"
       } else if (e.touches.length == 1) {
         // Resize
