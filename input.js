@@ -236,7 +236,7 @@ workspace.addEventListener(
     let time = date.getTime(); 
     touchStartTimeWS = time;
 
-    if (touchState === 'focused') {
+    if (touchState === 'focused' || touchState === 'resizing') {
       document.getElementById('debug').innerText = e.touches.length;
       console.log(e.touches[0])
       touchResizingTimeWS = time;
@@ -306,7 +306,7 @@ workspace.addEventListener(
       document.getElementById('debug').innerText = e.touches.length;
       if (e.touches.length == 1) {
         // Resize
-        document.getElementById('debug').innerText = 'Resizing:' + e.touches.length;
+        document.getElementById('debug').innerText = 'After Resizing:' + e.touches.length;
       } else if (e.touches.length == 0) {
         touchState = "focused";
       }
