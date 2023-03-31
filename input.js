@@ -269,10 +269,13 @@ workspace.addEventListener(
         // Abort
         touchFocusTarget.style.left = `${originalOffsetX}px`;
         touchFocusTarget.style.top = `${originalOffsetY}px`;
-        touchFocusTarget = null;
-        clearAllSelectBoxes();
+        touchState = 'focused';
+        // touchFocusTarget = null;
+        // clearAllSelectBoxes();
       } else if (time - touchStartTimeWS < 200) {
         touchState = 'pending';
+        touchFocusTarget = null;
+        clearAllSelectBoxes();
         document.removeEventListener('touchmove', touchMove);
       }
     } else if (touchState === 'dragingTarget') {
