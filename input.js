@@ -265,11 +265,11 @@ workspace.addEventListener(
       touchState = 'movingTarget';
     } else if (touchState === 'movingTarget') {
       document.getElementById('debug').innerText = e.touches.length;
-      if (e.touches.length >= 1) {
+      if (e.touches.length > 1) {
         // Abort
         touchFocusTarget.style.left = `${originalOffsetX}px`;
         touchFocusTarget.style.top = `${originalOffsetY}px`;
-        touchState = 'focused';
+        // touchState = 'focused';
         // touchFocusTarget = null;
         // clearAllSelectBoxes();
       } else if (time - touchStartTimeWS < 200) {
