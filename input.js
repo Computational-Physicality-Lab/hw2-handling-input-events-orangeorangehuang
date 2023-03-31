@@ -252,11 +252,20 @@ workspace.addEventListener(
     if (touchState === 'doubleTouchingTarget') {
       touchState = 'movingTarget';
     } 
-    else if (touchState === 'movingTarget' && time - touchStartTimeWS < 200) {
-      touchState = 'pending';
-      document.removeEventListener('touchmove', touchMove);
+    else if (touchState === 'movingTarget') {
+      document.getElementById('debug').innerText = e.touches.length;
+      if (e.touches.length >= 1) {
+        // Abort
+        touchFocusTarget.style.left = `${originalOffsetX}px`;
+        touchFocusTarget.style.top = `${originalOffsetY}px`;
+        touchFocusTarget = null;
+      }
+      else if (time - touchStartTimeWS < 200) {
+        touchState = 'pending';
+        document.removeEventListener('touchmove', touchMove);
+      }
     } 
-    else if (touchState === 'dragingTarget' || touchState === 'movingTarget') {
+    else if (touchState === 'dragingTarget') {
       document.getElementById('debug').innerText = e.touches.length;
       if (e.touches.length >= 1) {
         // Abort
