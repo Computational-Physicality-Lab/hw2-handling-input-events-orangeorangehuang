@@ -244,24 +244,7 @@ targets.forEach((target) => {
 
       // touch
       console.log('touchend', touchState);
-      if (touchState == 'abortDragging') {
-        document.getElementById('debug').innerText = 'receive abortDragging';
-        if (touchFocusTarget !== null) {
-          if (touchOperateTarget === touchFocusTarget){
-            resizeX = dragOriginalX;
-            resizeY = dragOriginalY;
-            originalX = touchOperateTarget.offsetLeft;
-            originalY = touchOperateTarget.offsetTop;
-          }
-          touchState = 'focused';
-        }
-        else {
-          // document.getElementById('debug').innerText = 'pending';
-          touchState = 'pending';
-        }
-        touchOperateTarget = null;
-      }
-      else if (touchState == 'pending' || touchState == 'focused') {
+      if (touchState == 'pending' || touchState == 'focused') {
         clearAllSelectBoxes();
         touchFocusTarget = touchTempTarget;
         touchFocusTarget.style.backgroundColor = '#00f';
@@ -413,10 +396,22 @@ workspace.addEventListener(
     else if (touchState === 'draggingTarget') {
       if (e.touches.length >= 1) {
         // Abort
-        touchState = "abortDragging";
-        document.getElementById('debug').innerText = "abortDragging";
+        if (touchFocusTarget !== null) {
+          if (touchOperateTarget === touchFocusTarget){
+            resizeX = dragOriginalX;
+            resizeY = dragOriginalY;
+            originalX = touchOperateTarget.offsetLeft;
+            originalY = touchOperateTarget.offsetTop;
+          }
+          touchState = 'focused';
+        }
+        else {
+          // document.getElementById('debug').innerText = 'pending';
+          touchState = 'pending';
+        }
         touchOperateTarget.style.left = `${dragOriginalX}px`;
         touchOperateTarget.style.top = `${dragOriginalY}px`;
+        touchOperateTarget = null;
       }
     } 
     else if (touchState === 'touchingTarget') {
