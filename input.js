@@ -301,7 +301,7 @@ workspace.addEventListener(
     touchStartTimeWS = time;
 
     if (touchState === 'focused' || touchState === 'resizing') {
-      touchOperatingTarget = touchFocusTarget;
+      if (touchState === 'resizing') touchOperatingTarget = touchFocusTarget;
       console.log(e.touches[0])
       touchResizingTimeWS = time;
       if (e.touches.length == 1) {
