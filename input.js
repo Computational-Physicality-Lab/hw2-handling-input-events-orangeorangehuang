@@ -293,6 +293,8 @@ workspace.addEventListener(
       if (e.touches.length == 1) {
         // Resize
         document.getElementById('debug').innerText = 'Resizing:' + e.touches.length;
+      } else if (e.touches.length == 0) {
+        touchState = "focused";
       }
     } else if (touchState === 'pending') {
       clearAllSelectBoxes();
