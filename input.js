@@ -419,6 +419,9 @@ workspace.addEventListener(
         touchOperateTarget.style.top = `${dragOriginalY}px`;
       }
     } 
+    else if (touchState === 'abortDragging') {
+      document.getElementById('debug').innerText = 'receive abortDragging';
+    }
     else if (touchState === 'touchingTarget') {
       touchState = 'focused';
     } 
