@@ -140,35 +140,54 @@ document.addEventListener(
   false
 );
 
-
-
-
-
-
-
 // Touch Events
 
 let touchOffsetX = 0;
 let touchOffsetY = 0;
-let originalOffsetX = 0;
-let originalOffsetY = 0;
-let touchFocusTarget = null;
-let touchState = 'pending';
-// touchState: 
-  // pending
-  // touchingTarget
-  // doubleTouchingTarget: Double clicked but not yet start moving 
-  // movingTarget
-  // dragingTarget
+let isDragStart = false;
+let isMoveStart = false;
+let isTouched = false;
+let touch_works = true;
+let isDoubleClick = false;
 
-const touchMove = (e) => {
+const moveTouch = (e) => {
+  console.log('moveTouch');
   e.preventDefault();
-  console.log('touchMove');
-
-  if (touchState === 'movingTarget' || touchState === 'dragingTarget') {
-    touchFocusTarget.style.left = `${e.touches[0].clientX - touchOffsetX}px`;
-    touchFocusTarget.style.top = `${e.touches[0].clientY - touchOffsetY}px`;
+  if (isDragStart || isMoveStart) {
+    target_focus.style.left = `${e.touches[0].clientX - touchOffsetX}px`;
+    target_focus.style.top = `${e.touches[0].clientY - touchOffsetY}px`;
+    touch_works = false;
   }
+};
+
+const touchWorkspace = (e) => {
+  console.log('touchWorkspace', isTouched, isMoveStart);
+  e.preventDefault();
+  if (!isTouched && !isMoveStart) {
+    clearAllSelectBoxes();
+  }
+  touch_works = true;
+  isTouched = false;
+};
+
+const touchTarget = (e) => {
+  console.log('touchTarget', isTouched, touch_works);
+  e.preventDefault();
+  if (touch_works) {
+    clearAllSelectBoxes();
+    target_focus.style.backgroundColor = '#00f';
+  }
+  touch_works = true;
+  isTouched = true;
+};
+
+const doubleTouchTarget = (e) => {
+  console.log('doubleTouchTarget');
+  e.preventDefault();
+  isMoveStart = true;
+  isDoubleClick = true;
+  document.getElementById('debug').innerText = touchOffsetX;
+  document.addEventListener('touchmove', moveTouch);
 };
 
 let lastClick = 0;
@@ -178,12 +197,19 @@ targets.forEach((target) => {
     (e) => {
       console.log('touchstart');
       e.preventDefault();
-      touchFocusTarget = target;
-
+      let date = new Date();
+      let time = date.getTime();
+      const time_between_taps = 200; // 200ms
+      isDragStart = true;
+      isTouched = false;
+      target_focus = target;
       touchOffsetX = e.touches[0].clientX - target.offsetLeft;
       touchOffsetY = e.touches[0].clientY - target.offsetTop;
-      originalOffsetX = target.offsetLeft;
-      originalOffsetY = target.offsetTop;
+
+      if (time - lastClick < time_between_taps) {
+        doubleTouchTarget(e);
+      }
+      lastClick = time;
     },
     false
   );
@@ -192,9 +218,9 @@ targets.forEach((target) => {
     'touchmove',
     (e) => {
       e.preventDefault();
-      console.log('touchmove');
-      touchState = 'dragingTarget';
-      touchMove(e);
+      // console.log('touchmove');
+      target_focus = target;
+      moveTouch(e);
     },
     false
   );
@@ -204,39 +230,20 @@ targets.forEach((target) => {
     (e) => {
       console.log('touchend');
       e.preventDefault();
-
-      // touch
-      console.log('touchState', touchState);
-      if (touchState == 'pending' || touchState === 'movingTarget') {
-        clearAllSelectBoxes();
-        touchFocusTarget.style.backgroundColor = '#00f';
-        touchState = 'touchingTarget';
-      }
-
-      //double touch
-      let date = new Date();
-      let time = date.getTime();
-      const time_between_taps = 200; // 200ms
-      if (time - lastClick < time_between_taps) {
-        console.log('double Touch', touchState);
-        touchState = 'doubleTouchingTarget';
-        document.addEventListener('touchmove', touchMove);
-      }
-      lastClick = time;
+      touchTarget(e);
     },
     false
   );
 });
 
-let touchStartTimeWS = 0;
+let lastClickWS = 0;
 workspace.addEventListener(
   'touchstart',
   (e) => {
+    console.log('ws touchstart');
     e.preventDefault();
-    console.log('WS touchstart');
-
     let date = new Date();
-    touchStartTimeWS = date.getTime();
+    lastClickWS = date.getTime();
   },
   false
 );
@@ -244,66 +251,24 @@ workspace.addEventListener(
 workspace.addEventListener(
   'touchend',
   (e) => {
+    console.log('ws touchstart', isMoveStart);
     e.preventDefault();
-    let date = new Date();
-    let time = date.getTime();
-    console.log('ws touchend :', time - touchStartTimeWS, touchState);
-
-    if (touchState === 'doubleTouchingTarget') {
-      touchState = 'movingTarget';
-    } else if (touchState === 'dragingTarget' || touchState === 'touchingTarget') {
-      if (e.touches.length > 1) {
-        // Abort
-        touchFocusTarget.style.left = `${originalOffsetX}px`;
-        touchFocusTarget.style.top = `${originalOffsetY}px`;
+    if (!isDoubleClick && isMoveStart) {
+      let date = new Date();
+      let time = date.getTime();
+      console.log(time - lastClickWS);
+      if (time - lastClickWS < 200) {
+        console.log('ws touchstart cancel');
+        isMoveStart = false;
+        isDoubleClick = false;
+        document.removeEventListener('touchmove', moveTouch);
       }
-      else {
-        touchState = 'pending';
-      }
-    } else if (touchState === 'movingTarget' && time - touchStartTimeWS < 200) {
-      touchState = 'pending';
-      clearAllSelectBoxes();
-      document.removeEventListener('touchmove', touchMove);
-    } else if (touchState === 'pending') {
-      clearAllSelectBoxes();
+    } else {
+      touchWorkspace(e);
+      isDoubleClick = false;
     }
   },
   false
 );
-
-// let lastClickWS = 0;
-// workspace.addEventListener(
-//   'touchstart',
-//   (e) => {
-//     console.log('ws touchstart');
-//     e.preventDefault();
-//     let date = new Date();
-//     lastClickWS = date.getTime();
-//   },
-//   false
-// );
-
-// workspace.addEventListener(
-//   'touchend',
-//   (e) => {
-//     console.log('ws touchstart', isMoveStart);
-//     e.preventDefault();
-//     if (!isDoubleClick && isMoveStart) {
-//       let date = new Date();
-//       let time = date.getTime();
-//       console.log(time - lastClickWS);
-//       if (time - lastClickWS < 200) {
-//         console.log('ws touchstart cancel');
-//         isMoveStart = false;
-//         isDoubleClick = false;
-//         document.removeEventListener('touchmove', moveTouch);
-//       }
-//     } else {
-//       touchWorkspace(e);
-//       isDoubleClick = false;
-//     }
-//   },
-//   false
-// );
 
 // workspace.addEventListener('touchend', touchWorkspace, false);
