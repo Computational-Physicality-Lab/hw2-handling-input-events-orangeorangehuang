@@ -367,8 +367,8 @@ workspace.addEventListener(
         touchOperatingTarget.style.top = `${originalOffsetY}px`;
         resizeOffsetX = originalOffsetX;
         resizeOffsetY = originalOffsetY;
-        touchOperatingTarget = touchFocusTarget;
         document.removeEventListener('touchmove', touchMove);
+        touchOperatingTarget = touchFocusTarget;
         touchState = 'focused';
       } else if (touchOperatingTarget != null) {
         originalOffsetX = touchOperatingTarget.offsetLeft;
