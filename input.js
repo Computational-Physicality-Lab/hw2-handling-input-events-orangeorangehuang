@@ -157,6 +157,7 @@ let touchState = 'pending';
 // touchState: 
   // pending
   // touchingTarget
+  // focused
   // doubleTouchingTarget: Double clicked but not yet start moving 
   // movingTarget
   // dragingTarget
@@ -207,7 +208,7 @@ targets.forEach((target) => {
 
       // touch
       console.log('touchState', touchState);
-      if (touchState == 'pending' || touchState === 'movingTarget') {
+      if (touchState == 'pending' || touchState == 'focused' || touchState === 'movingTarget') {
         clearAllSelectBoxes();
         touchFocusTarget.style.backgroundColor = '#00f';
         touchState = 'touchingTarget';
@@ -278,10 +279,21 @@ workspace.addEventListener(
       }
     } 
     else if (touchState === 'touchingTarget') {
-      touchState = 'pending';
+      touchState = 'focused';
     } 
+    else if (touchState === 'focused') {
+      if (e.touches.length >= 1) {
+        // Resize
+        document.getElementById('debug').innerText = "Resizing";
+      }
+      else {
+        clearAllSelectBoxes();
+        touchState = "pending";
+      }
+    }
     else if (touchState === 'pending') {
       clearAllSelectBoxes();
+      touchState = "pending";
     }
   },
   false
