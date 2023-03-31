@@ -241,7 +241,13 @@ const touchResizing = (e) => {
   let dx_init = (touchResizeX1 - touchResizeX2 > 0)? touchResizeX1 - touchResizeX2: touchResizeX2 - touchResizeX1;
   let dy_init = (touchResizeY1 - touchResizeY2 > 0)? touchResizeY1 - touchResizeY2: touchResizeY2 - touchResizeY1;
   let direction = (dx_init > dy_init)? "x" : "y";
-  document.getElementById('debug').innerText = 'touchResizing:' + e.touches[0].clientX + "," + e.touches[0].clientY + "," + e.touches[1].clientX + "," + e.touches[1].clientY;
+
+  let x1 = e.touches[0].clientX;
+  let y1 = e.touches[0].clientY;
+  let x2 = e.touches[1].clientX;
+  let y2 = e.touches[1].clientY;
+
+  document.getElementById('debug').innerText = 'touchResizing:' + x1 + " " + y1 + " " + x2 + " " + y2;
 };
 
 workspace.addEventListener(
