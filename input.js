@@ -219,6 +219,8 @@ targets.forEach((target) => {
       touchTempY = e.touches[0].clientY - target.offsetTop;
       dragTouchX = e.touches[0].clientX - target.offsetLeft;
       dragTouchY = e.touches[0].clientY - target.offsetTop;
+      dragOriginalX = target.offsetLeft;
+      dragOriginalY = target.offsetTop;
     },
     false
   );
@@ -228,8 +230,6 @@ targets.forEach((target) => {
     (e) => {
       e.preventDefault();
       touchOperateTarget = target;
-      dragOriginalX = target.offsetLeft;
-      dragOriginalY = target.offsetTop;
       touchState = 'dragingTarget';
       touchDrag(e);
     },
