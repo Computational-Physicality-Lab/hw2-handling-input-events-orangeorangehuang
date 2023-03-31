@@ -246,7 +246,10 @@ targets.forEach((target) => {
       console.log('touchend', touchState);
       if (touchState == 'abortDragging') {
         if (touchFocusTarget !== null) {
-          touchState == 'focused';
+          touchState = 'focused';
+        }
+        else {
+          touchState = 'pending';
         }
       }
       else if (touchState == 'pending' || touchState == 'focused') {
