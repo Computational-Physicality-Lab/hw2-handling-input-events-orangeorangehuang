@@ -140,6 +140,12 @@ document.addEventListener(
   false
 );
 
+// 
+// 
+// 
+// 
+// 
+// 
 // Touch Events
 
 let touchOffsetX = 0;
@@ -149,13 +155,13 @@ let originalOffsetY = 0;
 let touchFocusTarget = null;
 let touchState = 'pending';
 // touchState:
-// pending
-// touchingTarget
-// focused
-// resizing
-// doubleTouchingTarget: Double clicked but not yet start moving
-// movingTarget
-// dragingTarget
+//    pending
+//    touchingTarget: Touched but no further changes
+//    focused
+//    resizing
+//    doubleTouchingTarget: Double touched but not yet start moving
+//    movingTarget
+//    dragingTarget
 
 const touchMove = (e) => {
   e.preventDefault();
@@ -226,11 +232,22 @@ targets.forEach((target) => {
 
 let touchStartTimeWS = 0;
 let touchResizingTimeWS = 0;
+let touchResizeX1 = 0;
+let touchResizeY1 = 0;
+let touchResizeX2 = 0;
+let touchResizeY2 = 0;
+
+const touchResizing = (e) => {
+  let dx_init = (touchResizeX1 - touchResizeX2 > 0)? touchResizeX1 - touchResizeX2: touchResizeX2 - touchResizeX1;
+  let dy_init = (touchResizeY1 - touchResizeY2 > 0)? touchResizeY1 - touchResizeY2: touchResizeY2 - touchResizeY1;
+  let direction = (dx_init > dy_init)? "x" : "y";
+  document.getElementById('debug').innerText = 'touchResizing:' + e.touches[0].clientX;
+};
+
 workspace.addEventListener(
   'touchstart',
   (e) => {
     e.preventDefault();
-    console.log('WS touchstart');
 
     let date = new Date();
     let time = date.getTime(); 
@@ -243,10 +260,23 @@ workspace.addEventListener(
       if (e.touches.length == 1) {
         // Resize
         document.getElementById('debug').innerText = 'Before Resizing:' + e.touches.length;
-        // touchState = "resizing"
-      } else if (e.touches.length == 2 || time - touchStartTimeWS < 200) {
+        touchResizeX1 = e.touches[0].clientX;
+        touchResizeY1 = e.touches[0].clientY;
+      } else if (e.touches.length == 1 && time - touchStartTimeWS < 200) {
         // Resize
         document.getElementById('debug').innerText = 'Resizing:' + e.touches.length;
+        touchResizeX2 = e.touches[0].clientX;
+        touchResizeY2 = e.touches[0].clientY;
+        workspace.addEventListener("touchmove", touchResizing, false);
+        touchState = "resizing"
+      } else if (e.touches.length == 2) {
+        // Resize
+        document.getElementById('debug').innerText = 'Resizing:' + e.touches.length;
+        touchResizeX1 = e.touches[0].clientX;
+        touchResizeY1 = e.touches[0].clientY;
+        touchResizeX2 = e.touches[1].clientX;
+        touchResizeY2 = e.touches[1].clientY;
+        workspace.addEventListener("touchmove", touchResizing, false);
         touchState = "resizing"
       } else {
         clearAllSelectBoxes();
