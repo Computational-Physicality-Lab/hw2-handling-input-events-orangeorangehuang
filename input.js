@@ -260,12 +260,19 @@ const touchResizing = (e) => {
   let x_max = window.innerWidth;
   let y_max = window.innerHeight;
   if (direction == "x") {
-    touchFocusTarget.style.backgroundColor = '#000';
     let x_prime = originalOffsetX - dx/2;
     let width_prime = originalWidth + dx;
     if (x_prime >= 0 && x_prime <= x_max && width_prime > 20){
       touchFocusTarget.style.left = `${x_prime}px`;
       touchFocusTarget.style.width = `${width_prime}px`;
+    } 
+  } else {
+    touchFocusTarget.style.backgroundColor = '#000';
+    let y_prime = originalOffsetY - dy/2;
+    let height_prime = originalHeight + dy;
+    if (y_prime >= 0 && y_prime <= y_max && height_prime > 20){
+      touchFocusTarget.style.top = `${y_prime}px`;
+      touchFocusTarget.style.height = `${height_prime}px`;
     } 
   }
 
