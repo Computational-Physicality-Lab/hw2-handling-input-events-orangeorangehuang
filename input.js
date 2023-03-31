@@ -251,21 +251,27 @@ workspace.addEventListener(
 
     if (touchState === 'doubleTouchingTarget') {
       touchState = 'movingTarget';
-    } else if (touchState === 'dragingTarget' || touchState === 'touchingTarget') {
+    } 
+    else if (touchState === 'movingTarget' && time - touchStartTimeWS < 200) {
+      touchState = 'pending';
+      document.removeEventListener('touchmove', touchMove);
+    } 
+    else if (touchState === 'dragingTarget' || touchState === 'movingTarget') {
       document.getElementById('debug').innerText = e.touches.length;
-      if (e.touches.length > 0) {
+      if (e.touches.length > 1) {
         // Abort
         touchFocusTarget.style.left = `${originalOffsetX}px`;
         touchFocusTarget.style.top = `${originalOffsetY}px`;
+        touchFocusTarget = null;
       }
       else {
         touchState = 'pending';
       }
-    } else if (touchState === 'movingTarget' && time - touchStartTimeWS < 200) {
+    } 
+    else if (touchState === 'touchingTarget') {
       touchState = 'pending';
-      clearAllSelectBoxes();
-      document.removeEventListener('touchmove', touchMove);
-    } else if (touchState === 'pending') {
+    } 
+    else if (touchState === 'pending') {
       clearAllSelectBoxes();
     }
   },
