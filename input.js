@@ -252,6 +252,7 @@ workspace.addEventListener(
     if (touchState === 'doubleTouchingTarget') {
       touchState = 'movingTarget';
     } else if (touchState === 'dragingTarget' || touchState === 'touchingTarget') {
+      document.getElementById('debug').innerText = e.touches.length;
       if (e.touches.length > 1) {
         // Abort
         touchFocusTarget.style.left = `${originalOffsetX}px`;
