@@ -249,6 +249,7 @@ targets.forEach((target) => {
           touchState = 'focused';
         }
         else {
+          document.getElementById('debug').innerText = 'pending';
           touchState = 'pending';
         }
       }
