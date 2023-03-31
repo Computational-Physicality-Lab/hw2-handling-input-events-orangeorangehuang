@@ -366,6 +366,8 @@ workspace.addEventListener(
         // Abort
         touchFocusTarget.style.left = `${originalOffsetX}px`;
         touchFocusTarget.style.top = `${originalOffsetY}px`;
+        resizeOffsetX = originalOffsetX;
+        resizeOffsetY = originalOffsetY;
         touchFocusTarget = null;
         clearAllSelectBoxes();
       } else {
