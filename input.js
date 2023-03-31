@@ -279,7 +279,7 @@ workspace.addEventListener(
       touchState = 'focused';
     } else if (touchState === 'focused') {
       document.getElementById('debug').innerText = e.touches.length;
-      if (e.touches.length == 1) {
+      if (e.touches.length >= 1) {
         // Resize
         document.getElementById('debug').innerText = 'Touchend Resizing';
       } else {
