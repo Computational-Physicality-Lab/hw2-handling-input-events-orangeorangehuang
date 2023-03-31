@@ -374,16 +374,22 @@ workspace.addEventListener(
         // touchOperatingTarget = null;
         // clearAllSelectBoxes();
         document.removeEventListener('touchmove', touchMove);
-        touchState = 'focused';
-      } else if (touchOperatingTarget != null) {
-        originalOffsetX = touchOperatingTarget.offsetLeft;
-        originalOffsetY = touchOperatingTarget.offsetTop;
-        touchState = 'focused';
-      } else {
-        originalOffsetX = touchOperatingTarget.offsetLeft;
-        originalOffsetY = touchOperatingTarget.offsetTop;
-        touchState = 'pending';
+        if (touchFocusTarget !== null) {
+          touchState = 'focused';
+        } else {
+          touchState = 'pending';
+        }
+        
       }
+      //  else if (touchOperatingTarget != null) {
+      //   originalOffsetX = touchOperatingTarget.offsetLeft;
+      //   originalOffsetY = touchOperatingTarget.offsetTop;
+      //   touchState = 'focused';
+      // } else {
+      //   originalOffsetX = touchOperatingTarget.offsetLeft;
+      //   originalOffsetY = touchOperatingTarget.offsetTop;
+      //   touchState = 'pending';
+      // }
     } else if (touchState === 'touchingTarget') {
       touchState = 'focused';
     } 
