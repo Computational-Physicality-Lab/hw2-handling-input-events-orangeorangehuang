@@ -152,6 +152,8 @@ let touchOffsetX = 0;
 let touchOffsetY = 0;
 let originalOffsetX = 0;
 let originalOffsetY = 0;
+let originalWidth = 0;
+let originalHeight = 0;
 let touchFocusTarget = null;
 let touchState = 'pending';
 // touchState:
@@ -168,8 +170,7 @@ const touchMove = (e) => {
   console.log('touchMove');
 
   if (touchState === 'movingTarget' || touchState === 'dragingTarget') {
-    touchFocusTarget.style.left = `${e.touches[0].clientX - touchOffsetX}px`;
-    touchFocusTarget.style.top = `${e.touches[0].clientY - touchOffsetY}px`;
+    touchFocusTarget.style.left = `${originalOffsetX - touchOffsetX}px`;
   }
 };
 
@@ -186,6 +187,8 @@ targets.forEach((target) => {
       touchOffsetY = e.touches[0].clientY - target.offsetTop;
       originalOffsetX = target.offsetLeft;
       originalOffsetY = target.offsetTop;
+      originalWidth = target.offsetWidth;
+      originalHeight = target.offsetHeight;
     },
     false
   );
@@ -246,9 +249,13 @@ const touchResizing = (e) => {
   let y1 = e.touches[0].clientY;
   let x2 = e.touches[1].clientX;
   let y2 = e.touches[1].clientY;
+  let dx = (x1 - x2 > 0)? x1 - x2: x2 - x1;
+  let dy = (y1 - y2 > 0)? y1 - y2: y2 - y1;
+  if (direction == "x") {
+    // touchFocusTarget.style.left = 
+  }
 
-  document.getElementById('debug').innerText = 'touchResizing:' + x1 + " " + y1 + " " + x2 + " " + y2;
-};
+  document.getElementById('debug').innerText = 'touchResizing: ' + originalWidth + " " + originalHeight};
 
 workspace.addEventListener(
   'touchstart',
