@@ -258,7 +258,7 @@ workspace.addEventListener(
     } 
     else if (touchState === 'dragingTarget' || touchState === 'movingTarget') {
       document.getElementById('debug').innerText = e.touches.length;
-      if (e.touches.length > 1) {
+      if (e.touches.length >= 1) {
         // Abort
         touchFocusTarget.style.left = `${originalOffsetX}px`;
         touchFocusTarget.style.top = `${originalOffsetY}px`;
