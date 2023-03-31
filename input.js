@@ -161,6 +161,7 @@ let originalHeight = 0;
 let resizeWidth = 0;
 let resizeHeight = 0;
 let touchFocusTarget = null;
+let touchOperatingTarget = null;
 let touchState = 'pending';
 // touchState:
 //    pending
@@ -177,8 +178,8 @@ let touchState = 'pending';
 const touchMove = (e) => {
   e.preventDefault();
   if (touchState === 'movingTarget' || touchState === 'dragingTarget') {
-    touchFocusTarget.style.left = `${e.touches[0].clientX - touchOffsetX}px`;
-    touchFocusTarget.style.top = `${e.touches[0].clientY - touchOffsetY}px`;
+    touchOperatingTarget.style.left = `${e.touches[0].clientX - touchOffsetX}px`;
+    touchOperatingTarget.style.top = `${e.touches[0].clientY - touchOffsetY}px`;
     resizeOffsetX = e.touches[0].clientX - touchOffsetX;
     resizeOffsetY = e.touches[0].clientY - touchOffsetY;
   }
@@ -191,7 +192,7 @@ targets.forEach((target) => {
     (e) => {
       console.log('touchstart');
       e.preventDefault();
-      touchFocusTarget = target;
+      touchOperatingTarget = target;
 
       touchOffsetX = e.touches[0].clientX - target.offsetLeft;
       touchOffsetY = e.touches[0].clientY - target.offsetTop;
@@ -228,7 +229,7 @@ targets.forEach((target) => {
       console.log('touchState', touchState);
       if (touchState == 'pending' || touchState == 'focused' || touchState === 'movingTarget') {
         clearAllSelectBoxes();
-        touchFocusTarget.style.backgroundColor = '#00f';
+        touchOperatingTarget.style.backgroundColor = '#00f';
         touchState = 'touchingTarget';
       }
 
@@ -273,8 +274,8 @@ const touchResizing = (e) => {
     let x_prime = resizeOffsetX - dx/2;
     let width_prime = resizeWidth + dx;
     if (x_prime >= 0 && x_prime + width_prime <= window.innerWidth && width_prime > 20){
-      touchFocusTarget.style.left = `${x_prime}px`;
-      touchFocusTarget.style.width = `${width_prime}px`;
+      touchOperatingTarget.style.left = `${x_prime}px`;
+      touchOperatingTarget.style.width = `${width_prime}px`;
       resizeOffsetX = x_prime;
       resizeWidth = width_prime;
     } 
@@ -282,8 +283,8 @@ const touchResizing = (e) => {
     let y_prime = resizeOffsetY - dy/2;
     let height_prime = resizeHeight + dy;
     if (y_prime >= 0 && y_prime + height_prime <= window.innerHeight && height_prime > 20){
-      touchFocusTarget.style.top = `${y_prime}px`;
-      touchFocusTarget.style.height = `${height_prime}px`;
+      touchOperatingTarget.style.top = `${y_prime}px`;
+      touchOperatingTarget.style.height = `${height_prime}px`;
       resizeOffsetY = y_prime;
       resizeHeight = height_prime;
     } 
@@ -321,11 +322,11 @@ workspace.addEventListener(
         touchState = "resizing"
       } else if (e.touches.length == 3) {
         // Abort
-        touchFocusTarget.style.left = `${originalOffsetX}px`;
-        touchFocusTarget.style.top = `${originalOffsetY}px`;
-        touchFocusTarget.style.width = `${originalWidth}px`;
-        touchFocusTarget.style.height = `${originalHeight}px`;
-        touchFocusTarget = null;
+        touchOperatingTarget.style.left = `${originalOffsetX}px`;
+        touchOperatingTarget.style.top = `${originalOffsetY}px`;
+        touchOperatingTarget.style.width = `${originalWidth}px`;
+        touchOperatingTarget.style.height = `${originalHeight}px`;
+        touchOperatingTarget = null;
         clearAllSelectBoxes();
         touchState = "pending";
        
@@ -350,36 +351,36 @@ workspace.addEventListener(
     } else if (touchState === 'movingTarget') {
       if (e.touches.length >= 1) {
         // Abort
-        touchFocusTarget.style.left = `${originalOffsetX}px`;
-        touchFocusTarget.style.top = `${originalOffsetY}px`;
+        touchOperatingTarget.style.left = `${originalOffsetX}px`;
+        touchOperatingTarget.style.top = `${originalOffsetY}px`;
         touchState = 'focused';
       } 
       else if (time - touchStartTimeWS < 200) {
         touchState = 'pending';
-        originalOffsetX = touchFocusTarget.offsetLeft;
-        originalOffsetY = touchFocusTarget.offsetTop;
-        touchFocusTarget = null;
+        originalOffsetX = touchOperatingTarget.offsetLeft;
+        originalOffsetY = touchOperatingTarget.offsetTop;
+        touchOperatingTarget = null;
         clearAllSelectBoxes();
         document.removeEventListener('touchmove', touchMove);
       }
     } else if (touchState === 'dragingTarget') {
       if (e.touches.length >= 1) {
         // Abort
-        touchFocusTarget.style.left = `${originalOffsetX}px`;
-        touchFocusTarget.style.top = `${originalOffsetY}px`;
+        touchOperatingTarget.style.left = `${originalOffsetX}px`;
+        touchOperatingTarget.style.top = `${originalOffsetY}px`;
         resizeOffsetX = originalOffsetX;
         resizeOffsetY = originalOffsetY;
-        // touchFocusTarget = null;
+        // touchOperatingTarget = null;
         // clearAllSelectBoxes();
         document.removeEventListener('touchmove', touchMove);
         touchState = 'focused';
-      } else if (touchFocusTarget != null) {
-        originalOffsetX = touchFocusTarget.offsetLeft;
-        originalOffsetY = touchFocusTarget.offsetTop;
+      } else if (touchOperatingTarget != null) {
+        originalOffsetX = touchOperatingTarget.offsetLeft;
+        originalOffsetY = touchOperatingTarget.offsetTop;
         touchState = 'focused';
       } else {
-        originalOffsetX = touchFocusTarget.offsetLeft;
-        originalOffsetY = touchFocusTarget.offsetTop;
+        originalOffsetX = touchOperatingTarget.offsetLeft;
+        originalOffsetY = touchOperatingTarget.offsetTop;
         touchState = 'pending';
       }
     } else if (touchState === 'touchingTarget') {
