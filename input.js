@@ -245,6 +245,7 @@ targets.forEach((target) => {
       // touch
       console.log('touchend', touchState);
       if (touchState == 'abortDragging') {
+        document.getElementById('debug').innerText = 'receive abortDragging';
         if (touchFocusTarget !== null) {
           if (touchOperateTarget === touchFocusTarget){
             resizeX = dragOriginalX;
@@ -255,7 +256,7 @@ targets.forEach((target) => {
           touchState = 'focused';
         }
         else {
-          document.getElementById('debug').innerText = 'pending';
+          // document.getElementById('debug').innerText = 'pending';
           touchState = 'pending';
         }
         touchOperateTarget = null;
