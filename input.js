@@ -241,7 +241,7 @@ targets.forEach((target) => {
     'touchend',
     (e) => {
       e.preventDefault();
-      document.getElementById('debug').innerText = 'touchend' + touchState;
+      document.getElementById('debug').innerText = 'touchend: ' + touchState;
 
       // touch
       console.log('touchend', touchState);
@@ -255,7 +255,7 @@ targets.forEach((target) => {
         }
       }
       else if (touchState == 'pending' || touchState == 'focused') {
-        
+        document.getElementById('debug').innerText = 'pending: ' + touchState;
         clearAllSelectBoxes();
         touchFocusTarget = touchTempTarget;
         touchFocusTarget.style.backgroundColor = '#00f';
@@ -417,11 +417,9 @@ workspace.addEventListener(
           }
         }
         touchState = 'abortDragging';
-        document.getElementById('debug').innerText = 'reset x y';
         touchOperateTarget.style.left = `${dragOriginalX}px`;
         touchOperateTarget.style.top = `${dragOriginalY}px`;
         touchOperateTarget = null;
-        document.getElementById('debug').innerText = 'abort clear';
       }
     } 
     else if (touchState === 'touchingTarget') {
