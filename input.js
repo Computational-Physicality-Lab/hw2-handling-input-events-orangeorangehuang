@@ -173,7 +173,8 @@ const touchMove = (e) => {
   console.log('touchMove');
 
   if (touchState === 'movingTarget' || touchState === 'dragingTarget') {
-    touchFocusTarget.style.left = `${originalOffsetX - touchOffsetX}px`;
+    touchFocusTarget.style.left = `${e.touches[0].clientX - touchOffsetX}px`;
+    touchFocusTarget.style.top = `${e.touches[0].clientY - touchOffsetY}px`;
   }
 };
 
@@ -263,13 +264,15 @@ const touchResizing = (e) => {
   if (direction == "x") {
     touchFocusTarget.style.backgroundColor = '#000';
     let x_prime = originalOffsetX - dx/2;
-    if (x_prime >= 0){
-      touchFocusTarget.style.left = `${originalOffsetX - dx/2}px`;
-      touchFocusTarget.style.width = `${originalWidth + dx}px`;
-    } 
+    // if (x_prime >= 0 && x_prime <= x_max){
+    //   touchFocusTarget.style.left = `${originalOffsetX - dx/2}px`;
+    //   touchFocusTarget.style.width = `${originalWidth + dx}px`;
+    // } 
   }
 
-  document.getElementById('debug').innerText = 'touchResizing (X): ' + x_max + " " + y_max};
+  document.getElementById('debug').innerText = 'touchResizing (X): ' + x_max + " " + y_max;
+
+};
 
 workspace.addEventListener(
   'touchstart',
