@@ -239,7 +239,7 @@ workspace.addEventListener(
       if (e.touches.length == 2) {
         // Resize
         document.getElementById('debug').innerText = 'Resizing:' + e.touches.length;
-        touchState = "resizing"
+        // touchState = "resizing"
       } else if (e.touches.length == 1) {
         // Resize
         // document.getElementById('debug').innerText = 'Resizing:' + e.touches.length;
