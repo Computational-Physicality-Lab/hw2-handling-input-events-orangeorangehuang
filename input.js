@@ -257,13 +257,19 @@ const touchResizing = (e) => {
   let y2 = e.touches[1].clientY;
   let dx = (x1 - x2 > 0)? x1 - x2: x2 - x1;
   let dy = (y1 - y2 > 0)? y1 - y2: y2 - y1;
+
+  let x_max = window.innerWidth;
+  let y_max = window.innerHeight;
   if (direction == "x") {
     // touchFocusTarget.style.backgroundColor = '#000';
-    touchFocusTarget.style.left = `${originalOffsetX - dx/2}px`;
-    touchFocusTarget.style.width = `${originalWidth + dx}px`;
+    let x_prime = originalOffsetX - dx/2
+    if (x_prime >= 0){
+      touchFocusTarget.style.left = `${originalOffsetX - dx/2}px`;
+      touchFocusTarget.style.width = `${originalWidth + dx}px`;
+    } 
   }
 
-  document.getElementById('debug').innerText = 'touchResizing (X): ' + originalWidth + " " + originalHeight};
+  document.getElementById('debug').innerText = 'touchResizing (X): ' + x_max + " " + y_max};
 
 workspace.addEventListener(
   'touchstart',
