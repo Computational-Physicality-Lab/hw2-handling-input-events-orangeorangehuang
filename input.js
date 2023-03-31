@@ -180,7 +180,7 @@ let touchState = 'pending';
 //    resizing
 //    doubleTouchingTarget: Double touched but not yet start moving
 //    movingTarget
-//    dragingTarget
+//    draggingTarget
 
 
 // Target Part
@@ -197,7 +197,7 @@ const touchMove = (e) => {
 
 const touchDrag = (e) => {
   e.preventDefault();
-  if (touchState === 'dragingTarget') {
+  if (touchState === 'draggingTarget') {
     touchOperateTarget.style.left = `${e.touches[0].clientX - dragTouchX}px`;
     touchOperateTarget.style.top = `${e.touches[0].clientY - dragTouchY}px`;
     if (touchOperateTarget === touchFocusTarget) {
@@ -230,7 +230,7 @@ targets.forEach((target) => {
     (e) => {
       e.preventDefault();
       touchOperateTarget = target;
-      touchState = 'dragingTarget';
+      touchState = 'draggingTarget';
       touchDrag(e);
     },
     false
@@ -243,7 +243,23 @@ targets.forEach((target) => {
 
       // touch
       console.log('touchend', touchState);
-      if (touchState == 'pending' || touchState == 'focused') {
+      if (touchState == 'draggingTarget') {
+        if (touchFocusTarget !== null) {
+          if (touchOperateTarget === touchFocusTarget){
+            resizeX = dragOriginalX;
+            resizeY = dragOriginalY;
+            originalX = touchOperateTarget.offsetLeft;
+            originalY = touchOperateTarget.offsetTop;
+          }
+          touchState = 'focused';
+        }
+        else {
+          document.getElementById('debug').innerText = 'pending';
+          touchState = 'pending';
+        }
+        touchOperateTarget = null;
+      }
+      else if (touchState == 'pending' || touchState == 'focused') {
         clearAllSelectBoxes();
         touchFocusTarget = touchTempTarget;
         touchFocusTarget.style.backgroundColor = '#00f';
@@ -392,26 +408,12 @@ workspace.addEventListener(
         document.removeEventListener('touchmove', touchMove);
       }
     } 
-    else if (touchState === 'dragingTarget') {
+    else if (touchState === 'draggingTarget') {
       document.getElementById('debug').innerText = touchFocusTarget;
       if (e.touches.length >= 1) {
         // Abort
         touchOperateTarget.style.left = `${dragOriginalX}px`;
         touchOperateTarget.style.top = `${dragOriginalY}px`;
-        if (touchFocusTarget !== null) {
-          if (touchOperateTarget === touchFocusTarget){
-            resizeX = dragOriginalX;
-            resizeY = dragOriginalY;
-            originalX = touchOperateTarget.offsetLeft;
-            originalY = touchOperateTarget.offsetTop;
-          }
-          touchState = 'focused';
-        }
-        else {
-          document.getElementById('debug').innerText = 'pending';
-          touchState = 'pending';
-        }
-        touchOperateTarget = null;
       }
     } 
     else if (touchState === 'touchingTarget') {
