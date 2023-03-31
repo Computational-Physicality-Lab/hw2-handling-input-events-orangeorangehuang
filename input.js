@@ -213,7 +213,7 @@ targets.forEach((target) => {
       e.preventDefault();
       console.log('touchmove');
       touchState = 'dragingTarget';
-      document.removeEventListener('touchmove', touchMove);
+      // document.removeEventListener('touchmove', touchMove);
       touchMove(e);
     },
     false
