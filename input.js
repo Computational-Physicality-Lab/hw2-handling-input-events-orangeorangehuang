@@ -181,6 +181,7 @@ let touchState = 'pending';
 //    doubleTouchingTarget: Double touched but not yet start moving
 //    movingTarget
 //    draggingTarget
+//    abortDragging
 
 
 // Target Part
@@ -243,7 +244,7 @@ targets.forEach((target) => {
 
       // touch
       console.log('touchend', touchState);
-      if (touchState == 'draggingTarget') {
+      if (touchState == 'abortDragging') {
         if (touchFocusTarget !== null) {
           if (touchOperateTarget === touchFocusTarget){
             resizeX = dragOriginalX;
@@ -412,6 +413,7 @@ workspace.addEventListener(
       document.getElementById('debug').innerText = touchFocusTarget;
       if (e.touches.length >= 1) {
         // Abort
+        touchState = "abortDragging";
         touchOperateTarget.style.left = `${dragOriginalX}px`;
         touchOperateTarget.style.top = `${dragOriginalY}px`;
       }
