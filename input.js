@@ -261,7 +261,7 @@ const touchResizing = (e) => {
   let x_max = window.innerWidth;
   let y_max = window.innerHeight;
   if (direction == "x") {
-    // touchFocusTarget.style.backgroundColor = '#000';
+    touchFocusTarget.style.backgroundColor = '#000';
     let x_prime = originalOffsetX - dx/2
     if (x_prime >= 0){
       touchFocusTarget.style.left = `${originalOffsetX - dx/2}px`;
