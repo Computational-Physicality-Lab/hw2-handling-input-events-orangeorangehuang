@@ -270,7 +270,7 @@ const touchResizing = (e) => {
     touchFocusTarget.style.backgroundColor = '#000';
     let y_prime = originalOffsetY - dy/2;
     let height_prime = originalHeight + dy;
-    if (y_prime >= 0 && y_prime <= y_max && height_prime > 20){
+    if (y_prime >= 0 && y_prime + height_prime <= y_max && height_prime > 20){
       touchFocusTarget.style.top = `${y_prime}px`;
       touchFocusTarget.style.height = `${height_prime}px`;
     } 
