@@ -262,7 +262,7 @@ const touchResizing = (e) => {
     touchFocusTarget.style.width = originalWidth + dx;
   }
 
-  document.getElementById('debug').innerText = 'touchResizing: ' + originalWidth + " " + originalHeight};
+  document.getElementById('debug').innerText = 'touchResizing (X): ' + originalWidth + " " + originalHeight};
 
 workspace.addEventListener(
   'touchstart',
