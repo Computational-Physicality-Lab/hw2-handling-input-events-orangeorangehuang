@@ -244,7 +244,12 @@ targets.forEach((target) => {
 
       // touch
       console.log('touchend', touchState);
-      if (touchState == 'pending' || touchState == 'focused') {
+      if (touchState == 'abortDragging') {
+        if (touchFocusTarget !== null) {
+          touchState == 'focused';
+        }
+      }
+      else if (touchState == 'pending' || touchState == 'focused') {
         document.getElementById('debug').innerText = 'pending or focused';
         clearAllSelectBoxes();
         touchFocusTarget = touchTempTarget;
@@ -404,12 +409,8 @@ workspace.addEventListener(
             originalX = touchOperateTarget.offsetLeft;
             originalY = touchOperateTarget.offsetTop;
           }
-          touchState = 'focused';
         }
-        else {
-          // document.getElementById('debug').innerText = 'pending';
-          touchState = 'pending';
-        }
+        touchState = 'abortDragging';
         touchOperateTarget.style.left = `${dragOriginalX}px`;
         touchOperateTarget.style.top = `${dragOriginalY}px`;
         touchOperateTarget = null;
