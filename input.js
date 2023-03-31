@@ -327,9 +327,8 @@ workspace.addEventListener(
         touchOperatingTarget.style.top = `${originalOffsetY}px`;
         touchOperatingTarget.style.width = `${originalWidth}px`;
         touchOperatingTarget.style.height = `${originalHeight}px`;
-        touchOperatingTarget = null;
-        clearAllSelectBoxes();
-        touchState = "pending";
+        touchOperatingTarget = touchFocusTarget;
+        touchState = "focused";
        
       } else {
         clearAllSelectBoxes();
