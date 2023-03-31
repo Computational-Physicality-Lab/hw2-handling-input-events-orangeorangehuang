@@ -255,14 +255,14 @@ const touchResizing = (e) => {
   let y1 = e.touches[0].clientY;
   let x2 = e.touches[1].clientX;
   let y2 = e.touches[1].clientY;
-  let dx = (x1 - x2 > 0)? x1 - x2: x2 - x1;
-  let dy = (y1 - y2 > 0)? y1 - y2: y2 - y1;
+  let dx = (x1 - x2 > 0)? x1 - x2 - dx_init: x2 - x1 - dx_init;
+  let dy = (y1 - y2 > 0)? y1 - y2 - dy_init: y2 - y1 - dy_init;
 
   let x_max = window.innerWidth;
   let y_max = window.innerHeight;
   if (direction == "x") {
     touchFocusTarget.style.backgroundColor = '#000';
-    let x_prime = originalOffsetX - dx/2
+    let x_prime = originalOffsetX - dx/2;
     if (x_prime >= 0){
       touchFocusTarget.style.left = `${originalOffsetX - dx/2}px`;
       touchFocusTarget.style.width = `${originalWidth + dx}px`;
