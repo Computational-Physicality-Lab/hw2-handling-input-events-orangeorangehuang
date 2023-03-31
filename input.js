@@ -269,7 +269,7 @@ workspace.addEventListener(
         // Abort
         touchFocusTarget.style.left = `${originalOffsetX}px`;
         touchFocusTarget.style.top = `${originalOffsetY}px`;
-        // touchState = 'focused';
+        touchState = 'focused';
         // touchFocusTarget = null;
         // clearAllSelectBoxes();
       } 
