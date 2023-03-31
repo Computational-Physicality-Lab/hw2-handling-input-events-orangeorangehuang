@@ -268,7 +268,7 @@ const touchResizing = (e) => {
   if (direction == "x") {
     let x_prime = resizeOffsetX - dx/2;
     let width_prime = resizeWidth + dx;
-    if (x_prime >= 0 && x_prime <= x_max && width_prime > 20){
+    if (x_prime >= 0 && x_prime + width_prime <= x_max && width_prime > 20){
       touchFocusTarget.style.left = `${x_prime}px`;
       touchFocusTarget.style.width = `${width_prime}px`;
       resizeOffsetX = x_prime;
