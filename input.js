@@ -413,7 +413,9 @@ workspace.addEventListener(
       if (e.touches.length >= 1) {
         // Abort
         touchState = "abortDragging";
-        document.getElementById('debug').innerText = "abort dragging";
+        document.getElementById('debug').innerText = "abortDragging";
+        touchOperateTarget.style.left = `${dragOriginalX}px`;
+        touchOperateTarget.style.top = `${dragOriginalY}px`;
       }
     } 
     else if (touchState === 'touchingTarget') {
