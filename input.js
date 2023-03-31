@@ -393,7 +393,7 @@ workspace.addEventListener(
       }
     } 
     else if (touchState === 'dragingTarget') {
-      document.getElementById('debug').innerText = dragOriginalX;
+      document.getElementById('debug').innerText = touchFocusTarget;
       if (e.touches.length >= 1) {
         // Abort
         touchOperateTarget.style.left = `${dragOriginalX}px`;
