@@ -243,12 +243,7 @@ targets.forEach((target) => {
 
       // touch
       console.log('touchend', touchState);
-      if (touchState === 'dragingTarget') {
-        touchOperateTarget = null;
-        if (touchFocusTarget != null) touchState = 'touchingTarget';
-        else touchState = "pending";
-      }
-      else if (touchState == 'pending' || touchState == 'focused') {
+      if (touchState == 'pending' || touchState == 'focused') {
         clearAllSelectBoxes();
         touchFocusTarget = touchTempTarget;
         touchFocusTarget.style.backgroundColor = '#00f';
