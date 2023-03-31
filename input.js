@@ -152,8 +152,10 @@ let touchOffsetX = 0;
 let touchOffsetY = 0;
 let originalOffsetX = 0;
 let originalOffsetY = 0;
-let originalWidth = 0;
-let originalHeight = 0;
+let resizeOffsetX = 0;
+let resizeOffsetY = 0;
+let resizeWidth = 0;
+let resizeHeight = 0;
 let touchFocusTarget = null;
 let touchState = 'pending';
 // touchState:
@@ -173,6 +175,8 @@ const touchMove = (e) => {
   if (touchState === 'movingTarget' || touchState === 'dragingTarget') {
     touchFocusTarget.style.left = `${e.touches[0].clientX - touchOffsetX}px`;
     touchFocusTarget.style.top = `${e.touches[0].clientY - touchOffsetY}px`;
+    resizeOffsetX = e.touches[0].clientX - touchOffsetX;
+    resizeOffsetY = e.touches[0].clientY - touchOffsetY;
   }
 };
 
@@ -189,8 +193,10 @@ targets.forEach((target) => {
       touchOffsetY = e.touches[0].clientY - target.offsetTop;
       originalOffsetX = target.offsetLeft;
       originalOffsetY = target.offsetTop;
-      originalWidth = target.offsetWidth;
-      originalHeight = target.offsetHeight;
+      resizeOffsetX = target.offsetLeft;
+      resizeOffsetY = target.offsetTop;
+      resizeWidth = target.offsetWidth;
+      resizeHeight = target.offsetHeight;
     },
     false
   );
@@ -260,19 +266,23 @@ const touchResizing = (e) => {
   let x_max = window.innerWidth;
   let y_max = window.innerHeight;
   if (direction == "x") {
-    let x_prime = originalOffsetX - dx/2;
-    let width_prime = originalWidth + dx;
+    let x_prime = resizeOffsetX - dx/2;
+    let width_prime = resizeWidth + dx;
     if (x_prime >= 0 && x_prime <= x_max && width_prime > 20){
       touchFocusTarget.style.left = `${x_prime}px`;
       touchFocusTarget.style.width = `${width_prime}px`;
+      resizeOffsetX = x_prime;
+      resizeWidth = width_prime;
     } 
   } else {
     touchFocusTarget.style.backgroundColor = '#000';
-    let y_prime = originalOffsetY - dy/2;
-    let height_prime = originalHeight + dy;
+    let y_prime = resizeOffsetY - dy/2;
+    let height_prime = resizeHeight + dy;
     if (y_prime >= 0 && y_prime + height_prime <= y_max && height_prime > 20){
       touchFocusTarget.style.top = `${y_prime}px`;
       touchFocusTarget.style.height = `${height_prime}px`;
+      resizeOffsetY = y_prime;
+      resizeHeight = height_prime;
     } 
   }
 
