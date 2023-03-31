@@ -367,8 +367,7 @@ workspace.addEventListener(
         touchOperatingTarget.style.top = `${originalOffsetY}px`;
         resizeOffsetX = originalOffsetX;
         resizeOffsetY = originalOffsetY;
-        // touchOperatingTarget = null;
-        // clearAllSelectBoxes();
+        touchOperatingTarget = touchFocusTarget;
         document.removeEventListener('touchmove', touchMove);
         touchState = 'focused';
       } else if (touchOperatingTarget != null) {
