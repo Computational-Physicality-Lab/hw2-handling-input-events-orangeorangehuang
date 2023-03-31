@@ -406,6 +406,7 @@ workspace.addEventListener(
     else if (touchState === 'draggingTarget') {
       if (e.touches.length >= 1) {
         // Abort
+        document.getElementById('debug').innerText = 'start abort';
         if (touchFocusTarget !== null) {
           if (touchOperateTarget === touchFocusTarget){
             resizeX = dragOriginalX;
@@ -415,9 +416,11 @@ workspace.addEventListener(
           }
         }
         touchState = 'abortDragging';
+        document.getElementById('debug').innerText = 'reset x y';
         touchOperateTarget.style.left = `${dragOriginalX}px`;
         touchOperateTarget.style.top = `${dragOriginalY}px`;
         touchOperateTarget = null;
+        document.getElementById('debug').innerText = 'abort clear';
       }
     } 
     else if (touchState === 'touchingTarget') {
