@@ -419,9 +419,6 @@ workspace.addEventListener(
         touchOperateTarget.style.top = `${dragOriginalY}px`;
       }
     } 
-    else if (touchState === 'abortDragging') {
-      document.getElementById('debug').innerText = 'receive abortDragging';
-    }
     else if (touchState === 'touchingTarget') {
       touchState = 'focused';
     } 
@@ -434,7 +431,7 @@ workspace.addEventListener(
         touchState = "focused";
       }
     } else if (touchState === 'pending') {
-      document.getElementById('debug').innerText = 'touchState = pending';
+      // document.getElementById('debug').innerText = 'touchState = pending';
       clearAllSelectBoxes();
       touchState = 'pending';
     }
