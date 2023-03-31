@@ -262,7 +262,7 @@ workspace.addEventListener(
         // Abort
         touchFocusTarget.style.left = `${originalOffsetX}px`;
         touchFocusTarget.style.top = `${originalOffsetY}px`;
-        touchFocusTarget = null;
+        // touchFocusTarget = null;
       }
       else {
         touchState = 'pending';
