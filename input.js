@@ -235,7 +235,7 @@ workspace.addEventListener(
 
     if (touchState === 'focused') {
       document.getElementById('debug').innerText = e.touches.length;
-      if (e.touches.length >= 1) {
+      if (e.touches.length == 2) {
         // Resize
         document.getElementById('debug').innerText = 'Resizing:' + e.touches.length;
       } else {
