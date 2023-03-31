@@ -230,6 +230,7 @@ targets.forEach((target) => {
       if (touchState == 'pending' || touchState == 'focused' || touchState === 'movingTarget') {
         clearAllSelectBoxes();
         touchOperatingTarget.style.backgroundColor = '#00f';
+        touchFocusTarget = touchOperatingTarget;
         touchState = 'touchingTarget';
       }
 
@@ -326,9 +327,8 @@ workspace.addEventListener(
         touchOperatingTarget.style.top = `${originalOffsetY}px`;
         touchOperatingTarget.style.width = `${originalWidth}px`;
         touchOperatingTarget.style.height = `${originalHeight}px`;
-        touchOperatingTarget = null;
-        clearAllSelectBoxes();
-        touchState = "pending";
+        touchOperatingTarget = touchFocusTarget;
+        touchState = "focused";
        
       } else {
         clearAllSelectBoxes();
