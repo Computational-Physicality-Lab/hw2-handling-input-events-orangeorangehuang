@@ -225,6 +225,7 @@ targets.forEach((target) => {
 });
 
 let touchStartTimeWS = 0;
+let touchResizingTimeWS = 0;
 workspace.addEventListener(
   'touchstart',
   (e) => {
@@ -232,12 +233,18 @@ workspace.addEventListener(
     console.log('WS touchstart');
 
     let date = new Date();
-    touchStartTimeWS = date.getTime();
+    let time = date.getTime(); 
+    touchStartTimeWS = time;
 
     if (touchState === 'focused') {
       document.getElementById('debug').innerText = e.touches.length;
       console.log(e.touches[0])
-      if (e.touches.length >= 1) {
+      touchResizingTimeWS = time;
+      if (e.touches.length == 1) {
+        // Resize
+        document.getElementById('debug').innerText = 'Resizing:' + e.touches.length;
+        touchState = "resizing"
+      } else if (e.touches.length == 2 || time - touchStartTimeWS < 200) {
         // Resize
         document.getElementById('debug').innerText = 'Resizing:' + e.touches.length;
         touchState = "resizing"
