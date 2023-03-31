@@ -267,6 +267,7 @@ workspace.addEventListener(
       document.getElementById('debug').innerText = e.touches.length;
       if (e.touches.length >= 1) {
         // Abort
+        document.getElementById('debug').innerText = "Abort:" + e.touches.length;
         touchFocusTarget.style.left = `${originalOffsetX}px`;
         touchFocusTarget.style.top = `${originalOffsetY}px`;
         touchState = 'focused';
