@@ -262,9 +262,10 @@ const touchResizing = (e) => {
   if (direction == "x") {
     touchFocusTarget.style.backgroundColor = '#000';
     let x_prime = originalOffsetX - dx/2;
-    if (x_prime >= 0 && x_prime <= x_max){
-      touchFocusTarget.style.left = `${originalOffsetX - dx/2}px`;
-      touchFocusTarget.style.width = `${originalWidth + dx}px`;
+    let width_prime = originalWidth + dx;
+    if (x_prime >= 0 && x_prime <= x_max && width_prime > 20){
+      touchFocusTarget.style.left = `${x_prime}px`;
+      touchFocusTarget.style.width = `${width_prime}px`;
     } 
   }
 
