@@ -213,6 +213,7 @@ targets.forEach((target) => {
       e.preventDefault();
       console.log('touchmove');
       touchState = 'dragingTarget';
+      document.removeEventListener('touchmove', touchMove);
       touchMove(e);
     },
     false
@@ -371,6 +372,7 @@ workspace.addEventListener(
         resizeOffsetY = originalOffsetY;
         // touchFocusTarget = null;
         // clearAllSelectBoxes();
+        document.removeEventListener('touchmove', touchMove);
         touchState = 'focused';
       } else if (touchFocusTarget != null) {
         originalOffsetX = touchFocusTarget.offsetLeft;
