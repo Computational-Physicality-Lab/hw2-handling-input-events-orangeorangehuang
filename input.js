@@ -426,6 +426,7 @@ workspace.addEventListener(
         touchState = "focused";
       }
     } else if (touchState === 'pending') {
+      document.getElementById('debug').innerText = 'touchState = pending';
       clearAllSelectBoxes();
       touchState = 'pending';
     }
