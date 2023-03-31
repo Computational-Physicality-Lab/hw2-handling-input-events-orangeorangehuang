@@ -327,9 +327,6 @@ workspace.addEventListener(
         touchOperatingTarget.style.top = `${originalOffsetY}px`;
         touchOperatingTarget.style.width = `${originalWidth}px`;
         touchOperatingTarget.style.height = `${originalHeight}px`;
-        touchOperatingTarget = touchFocusTarget;
-        touchState = "focused";
-       
       } else {
         clearAllSelectBoxes();
         touchState = 'pending';
@@ -392,6 +389,9 @@ workspace.addEventListener(
     } 
     else if (touchState === 'resizing') {
       if (e.touches.length == 0) {
+        touchState = "focused";
+      } else if (e.touches.length == 3) {
+        touchOperatingTarget = touchFocusTarget;
         touchState = "focused";
       }
     } else if (touchState === 'pending') {
