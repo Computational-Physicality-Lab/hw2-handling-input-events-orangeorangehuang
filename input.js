@@ -361,6 +361,8 @@ workspace.addEventListener(
       } 
       else if (time - touchStartTimeWS < 200) {
         touchState = 'pending';
+        originalOffsetX = touchFocusTarget.offsetLeft;
+        originalOffsetY = touchFocusTarget.offsetTop;
         touchFocusTarget = null;
         clearAllSelectBoxes();
         document.removeEventListener('touchmove', touchMove);
@@ -375,8 +377,12 @@ workspace.addEventListener(
         touchFocusTarget = null;
         clearAllSelectBoxes();
       } else if (touchFocusTarget != null) {
+        originalOffsetX = touchFocusTarget.offsetLeft;
+        originalOffsetY = touchFocusTarget.offsetTop;
         touchState = 'focused';
       } else {
+        originalOffsetX = touchFocusTarget.offsetLeft;
+        originalOffsetY = touchFocusTarget.offsetTop;
         touchState = 'pending';
       }
     } else if (touchState === 'touchingTarget') {
