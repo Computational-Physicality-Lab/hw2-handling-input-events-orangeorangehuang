@@ -430,6 +430,9 @@ workspace.addEventListener(
       if (e.touches.length == 0) {
         touchState = "focused";
       }
+    } 
+    else if (touchState === 'pending') {
+      clearAllSelectBoxes();
     }
   },
   false
