@@ -275,8 +275,8 @@ const touchResizing = (e) => {
     let x_prime = resizeOffsetX - dx/2;
     let width_prime = resizeWidth + dx;
     if (x_prime >= 0 && x_prime + width_prime <= window.innerWidth && width_prime > 20){
-      touchOperatingTarget.style.left = `${x_prime}px`;
-      touchOperatingTarget.style.width = `${width_prime}px`;
+      touchFocusTarget.style.left = `${x_prime}px`;
+      touchFocusTarget.style.width = `${width_prime}px`;
       resizeOffsetX = x_prime;
       resizeWidth = width_prime;
     } 
@@ -284,8 +284,8 @@ const touchResizing = (e) => {
     let y_prime = resizeOffsetY - dy/2;
     let height_prime = resizeHeight + dy;
     if (y_prime >= 0 && y_prime + height_prime <= window.innerHeight && height_prime > 20){
-      touchOperatingTarget.style.top = `${y_prime}px`;
-      touchOperatingTarget.style.height = `${height_prime}px`;
+      touchFocusTarget.style.top = `${y_prime}px`;
+      touchFocusTarget.style.height = `${height_prime}px`;
       resizeOffsetY = y_prime;
       resizeHeight = height_prime;
     } 
@@ -296,6 +296,7 @@ workspace.addEventListener(
   'touchstart',
   (e) => {
     e.preventDefault();
+    console.log("WS touchstart");
     let date = new Date();
     let time = date.getTime(); 
     touchStartTimeWS = time;
@@ -323,11 +324,10 @@ workspace.addEventListener(
         touchState = "resizing"
       } else if (e.touches.length == 3) {
         // Abort
-        touchOperatingTarget.style.left = `${originalOffsetX}px`;
-        touchOperatingTarget.style.top = `${originalOffsetY}px`;
-        touchOperatingTarget.style.width = `${originalWidth}px`;
-        touchOperatingTarget.style.height = `${originalHeight}px`;
-        touchOperatingTarget = touchFocusTarget;
+        touchFocusTarget.style.left = `${originalOffsetX}px`;
+        touchFocusTarget.style.top = `${originalOffsetY}px`;
+        touchFocusTarget.style.width = `${originalWidth}px`;
+        touchFocusTarget.style.height = `${originalHeight}px`;
         touchState = "pending";
        
       } else {
@@ -343,6 +343,7 @@ workspace.addEventListener(
   'touchend',
   (e) => {
     e.preventDefault();
+    console.log("WS touchend");
     let date = new Date();
     let time = date.getTime();
 
