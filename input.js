@@ -293,6 +293,15 @@ const touchResizing = (e) => {
 };
 
 workspace.addEventListener(
+  'touchcancel',
+  (e) => {
+    document.getElementById('debug').innerText = 'touchcancel';
+  },
+  false
+);
+
+
+workspace.addEventListener(
   'touchstart',
   (e) => {
     e.preventDefault();
