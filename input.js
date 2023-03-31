@@ -413,7 +413,7 @@ workspace.addEventListener(
       if (e.touches.length >= 1) {
         // Abort
         touchState = "abortDragging";
-        document.getElementById('debug').innerText = "abortDragging";
+        document.getElementById('debug').innerText = "abort dragging";
       }
     } 
     else if (touchState === 'touchingTarget') {
