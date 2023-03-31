@@ -285,9 +285,7 @@ const touchResizing = (e) => {
       resizeHeight = height_prime;
     } 
   }
-
   document.getElementById('debug').innerText = 'touchResizing (X): ' + x_max + " " + y_max;
-
 };
 
 workspace.addEventListener(
@@ -300,30 +298,36 @@ workspace.addEventListener(
     touchStartTimeWS = time;
 
     if (touchState === 'focused' || touchState === 'resizing') {
-      document.getElementById('debug').innerText = e.touches.length;
+      // document.getElementById('debug').innerText = e.touches.length;
       console.log(e.touches[0])
       touchResizingTimeWS = time;
       if (e.touches.length == 1) {
         // Resize
-        document.getElementById('debug').innerText = 'Before Resizing:' + e.touches.length;
+        // document.getElementById('debug').innerText = 'Before Resizing:' + e.touches.length;
         touchResizeX1 = e.touches[0].clientX;
         touchResizeY1 = e.touches[0].clientY;
       } else if (e.touches.length == 1 && time - touchStartTimeWS < 200) {
         // Resize
-        document.getElementById('debug').innerText = 'Resizing:' + e.touches.length;
+        // document.getElementById('debug').innerText = 'Resizing:' + e.touches.length;
         touchResizeX2 = e.touches[0].clientX;
         touchResizeY2 = e.touches[0].clientY;
         workspace.addEventListener("touchmove", touchResizing, false);
         touchState = "resizing"
       } else if (e.touches.length == 2) {
         // Resize
-        document.getElementById('debug').innerText = 'Resizing:' + e.touches.length;
+        // document.getElementById('debug').innerText = 'Resizing:' + e.touches.length;
         touchResizeX1 = e.touches[0].clientX;
         touchResizeY1 = e.touches[0].clientY;
         touchResizeX2 = e.touches[1].clientX;
         touchResizeY2 = e.touches[1].clientY;
         workspace.addEventListener("touchmove", touchResizing, false);
         touchState = "resizing"
+      } else if (e.touches.length == 3) {
+        // Abort
+        touchFocusTarget = null;
+        clearAllSelectBoxes();
+        workspace.removeEventListener("touchmove", touchResizing, false);
+        touchState = "pending"
       } else {
         clearAllSelectBoxes();
         touchState = 'pending';
@@ -344,10 +348,10 @@ workspace.addEventListener(
     if (touchState === 'doubleTouchingTarget') {
       touchState = 'movingTarget';
     } else if (touchState === 'movingTarget') {
-      document.getElementById('debug').innerText = e.touches.length;
+      // document.getElementById('debug').innerText = e.touches.length;
       if (e.touches.length >= 1) {
         // Abort
-        document.getElementById('debug').innerText = "Abort:" + e.touches.length;
+        // document.getElementById('debug').innerText = "Abort:" + e.touches.length;
         touchFocusTarget.style.left = `${originalOffsetX}px`;
         touchFocusTarget.style.top = `${originalOffsetY}px`;
         touchState = 'focused';
@@ -361,7 +365,7 @@ workspace.addEventListener(
         document.removeEventListener('touchmove', touchMove);
       }
     } else if (touchState === 'dragingTarget') {
-      document.getElementById('debug').innerText = e.touches.length;
+      // document.getElementById('debug').innerText = e.touches.length;
       if (e.touches.length >= 1) {
         // Abort
         touchFocusTarget.style.left = `${originalOffsetX}px`;
@@ -383,10 +387,10 @@ workspace.addEventListener(
       touchState = 'pending';
     } 
     else if (touchState === 'resizing') {
-      document.getElementById('debug').innerText = e.touches.length;
+      // document.getElementById('debug').innerText = e.touches.length;
       if (e.touches.length == 1) {
         // Resize
-        document.getElementById('debug').innerText = 'After Resizing:' + e.touches.length;
+        // document.getElementById('debug').innerText = 'After Resizing:' + e.touches.length;
       } else if (e.touches.length == 0) {
         touchState = "focused";
       }
