@@ -298,10 +298,10 @@ workspace.addEventListener(
     } else if (touchState === 'touchingTarget') {
       touchState = 'focused';
     } 
-    // else if (touchState === 'focused') {
-    //   clearAllSelectBoxes();
-    //   touchState = 'pending';
-    // } 
+    else if (touchState === 'focused') {
+      clearAllSelectBoxes();
+      touchState = 'pending';
+    } 
     else if (touchState === 'resizing') {
       document.getElementById('debug').innerText = e.touches.length;
       if (e.touches.length == 1) {
