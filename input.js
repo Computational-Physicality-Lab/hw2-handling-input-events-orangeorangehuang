@@ -300,24 +300,20 @@ workspace.addEventListener(
     touchStartTimeWS = time;
 
     if (touchState === 'focused' || touchState === 'resizing') {
-      // document.getElementById('debug').innerText = e.touches.length;
       console.log(e.touches[0])
       touchResizingTimeWS = time;
       if (e.touches.length == 1) {
         // Resize
-        // document.getElementById('debug').innerText = 'Before Resizing:' + e.touches.length;
         touchResizeX1 = e.touches[0].clientX;
         touchResizeY1 = e.touches[0].clientY;
       } else if (e.touches.length == 1 && time - touchStartTimeWS < 200) {
         // Resize
-        // document.getElementById('debug').innerText = 'Resizing:' + e.touches.length;
         touchResizeX2 = e.touches[0].clientX;
         touchResizeY2 = e.touches[0].clientY;
         workspace.addEventListener("touchmove", touchResizing, false);
         touchState = "resizing"
       } else if (e.touches.length == 2) {
         // Resize
-        // document.getElementById('debug').innerText = 'Resizing:' + e.touches.length;
         touchResizeX1 = e.touches[0].clientX;
         touchResizeY1 = e.touches[0].clientY;
         touchResizeX2 = e.touches[1].clientX;
@@ -326,7 +322,6 @@ workspace.addEventListener(
         touchState = "resizing"
       } else if (e.touches.length == 3) {
         // Abort
-        document.getElementById('debug').innerText = "Abort:" + e.touches.length;
         touchFocusTarget = null;
         clearAllSelectBoxes();
         touchState = "pending";
@@ -351,15 +346,11 @@ workspace.addEventListener(
     if (touchState === 'doubleTouchingTarget') {
       touchState = 'movingTarget';
     } else if (touchState === 'movingTarget') {
-      // document.getElementById('debug').innerText = e.touches.length;
       if (e.touches.length >= 1) {
         // Abort
-        // document.getElementById('debug').innerText = "Abort:" + e.touches.length;
         touchFocusTarget.style.left = `${originalOffsetX}px`;
         touchFocusTarget.style.top = `${originalOffsetY}px`;
         touchState = 'focused';
-        // touchFocusTarget = null;
-        // clearAllSelectBoxes();
       } 
       else if (time - touchStartTimeWS < 200) {
         touchState = 'pending';
@@ -368,7 +359,6 @@ workspace.addEventListener(
         document.removeEventListener('touchmove', touchMove);
       }
     } else if (touchState === 'dragingTarget') {
-      // document.getElementById('debug').innerText = e.touches.length;
       if (e.touches.length >= 1) {
         // Abort
         touchFocusTarget.style.left = `${originalOffsetX}px`;
@@ -390,10 +380,8 @@ workspace.addEventListener(
       touchState = 'pending';
     } 
     else if (touchState === 'resizing') {
-      // document.getElementById('debug').innerText = e.touches.length;
       if (e.touches.length == 1) {
         // Resize
-        // document.getElementById('debug').innerText = 'After Resizing:' + e.touches.length;
       } else if (e.touches.length == 0) {
         touchState = "focused";
       }
@@ -404,40 +392,3 @@ workspace.addEventListener(
   },
   false
 );
-
-// let lastClickWS = 0;
-// workspace.addEventListener(
-//   'touchstart',
-//   (e) => {
-//     console.log('ws touchstart');
-//     e.preventDefault();
-//     let date = new Date();
-//     lastClickWS = date.getTime();
-//   },
-//   false
-// );
-
-// workspace.addEventListener(
-//   'touchend',
-//   (e) => {
-//     console.log('ws touchstart', isMoveStart);
-//     e.preventDefault();
-//     if (!isDoubleClick && isMoveStart) {
-//       let date = new Date();
-//       let time = date.getTime();
-//       console.log(time - lastClickWS);
-//       if (time - lastClickWS < 200) {
-//         console.log('ws touchstart cancel');
-//         isMoveStart = false;
-//         isDoubleClick = false;
-//         document.removeEventListener('touchmove', moveTouch);
-//       }
-//     } else {
-//       touchWorkspace(e);
-//       isDoubleClick = false;
-//     }
-//   },
-//   false
-// );
-
-// workspace.addEventListener('touchend', touchWorkspace, false);
