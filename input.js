@@ -252,10 +252,12 @@ let touchResizeX2 = 0;
 let touchResizeY2 = 0;
 
 const touchResizing = (e) => {
+  if (touchState != "resizing") return;
+
   let dx_init = (touchResizeX1 - touchResizeX2 > 0)? touchResizeX1 - touchResizeX2: touchResizeX2 - touchResizeX1;
   let dy_init = (touchResizeY1 - touchResizeY2 > 0)? touchResizeY1 - touchResizeY2: touchResizeY2 - touchResizeY1;
   let direction = (dx_init > dy_init)? "x" : "y";
-
+  
   let x1 = e.touches[0].clientX;
   let y1 = e.touches[0].clientY;
   let x2 = e.touches[1].clientX;
@@ -326,8 +328,8 @@ workspace.addEventListener(
         // Abort
         touchFocusTarget = null;
         clearAllSelectBoxes();
+        touchState = "pending";
         workspace.removeEventListener("touchmove", touchResizing, false);
-        touchState = "pending"
       } else {
         clearAllSelectBoxes();
         touchState = 'pending';
