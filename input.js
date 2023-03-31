@@ -235,11 +235,11 @@ workspace.addEventListener(
     touchStartTimeWS = date.getTime();
 
     if (touchState === 'focused') {
-      document.getElementById('debug').innerText = e.touches[0];
+      document.getElementById('debug').innerText = e.touches.length;
       console.log(e.touches[0])
       if (e.touches.length == 2) {
         // Resize
-        document.getElementById('debug').innerText = 'Resizing:' + e.touches[1];
+        document.getElementById('debug').innerText = 'Resizing:' + e.touches.length;
         touchState = "resizing"
       } else {
         clearAllSelectBoxes();
