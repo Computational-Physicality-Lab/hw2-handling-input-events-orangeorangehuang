@@ -272,7 +272,16 @@ workspace.addEventListener(
         // touchState = 'focused';
         // touchFocusTarget = null;
         // clearAllSelectBoxes();
-      } else if (time - touchStartTimeWS < 200) {
+      } 
+      else if (e.touches.length == 1) {
+        // Abort
+        // touchFocusTarget.style.left = `${originalOffsetX}px`;
+        // touchFocusTarget.style.top = `${originalOffsetY}px`;
+        touchState = 'focused';
+        // touchFocusTarget = null;
+        // clearAllSelectBoxes();
+      }
+      else if (time - touchStartTimeWS < 200) {
         touchState = 'pending';
         touchFocusTarget = null;
         clearAllSelectBoxes();
