@@ -430,10 +430,6 @@ workspace.addEventListener(
       if (e.touches.length == 0) {
         touchState = "focused";
       }
-    } else if (touchState === 'pending') {
-      // document.getElementById('debug').innerText = 'touchState = pending';
-      clearAllSelectBoxes();
-      touchState = 'pending';
     }
   },
   false
