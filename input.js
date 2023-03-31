@@ -259,8 +259,8 @@ const touchResizing = (e) => {
   let dy = (y1 - y2 > 0)? y1 - y2: y2 - y1;
   if (direction == "x") {
     touchFocusTarget.style.backgroundColor = '#000';
-    touchFocusTarget.style.left = originalOffsetX - dx/2;
-    touchFocusTarget.style.width = originalWidth + dx;
+    touchFocusTarget.style.left = `${originalOffsetX - dx/2}px`;
+    touchFocusTarget.style.width = `${originalWidth + dx}px`;
   }
 
   document.getElementById('debug').innerText = 'touchResizing (X): ' + originalWidth + " " + originalHeight};
