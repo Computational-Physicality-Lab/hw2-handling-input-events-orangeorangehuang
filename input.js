@@ -237,7 +237,7 @@ workspace.addEventListener(
       document.getElementById('debug').innerText = e.touches.length;
       if (e.touches.length >= 1) {
         // Resize
-        document.getElementById('debug').innerText = 'Resizing';
+        document.getElementById('debug').innerText = 'Resizing:' + e.touches.length;
       } else {
         clearAllSelectBoxes();
         touchState = 'pending';
