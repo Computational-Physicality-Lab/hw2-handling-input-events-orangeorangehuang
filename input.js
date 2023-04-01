@@ -422,11 +422,11 @@ workspace.addEventListener(
         touchOperateTarget = null;
       }
       else if (touchFocusTarget !== null) {
-        touchOriginalX = touchFocusTarget.offsetLeft;
-        touchOriginalY = touchFocusTarget.offsetTop;
+        document.getElementById('debug').innerText = 'abortDragging -> focused';
         touchState = 'focused';
       }
       else {
+        document.getElementById('debug').innerText = 'abortDragging -> pending';
         touchState = 'pending';
       }
     } 
