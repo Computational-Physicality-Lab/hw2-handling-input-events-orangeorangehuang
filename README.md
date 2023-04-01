@@ -5,6 +5,7 @@
 
 ## 1. Requirements
 ### 1.1 General Requirements
+- [x] My code for HW2 is put under the subfolder `create_your_own`, and linked from the `CREATE YOUR OWN` link on the web site from HW1. 
 - [x] My code works no matter how many `div`s there are.
 
 ### 1.2 Basic Requirements
