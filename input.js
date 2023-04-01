@@ -271,7 +271,7 @@ targets.forEach((target) => {
         originalWidth = target.offsetWidth;
         originalHeight = target.offsetHeight;
         console.log('touchend: Update focus')
-        document.getElementById('debug').innerText = touchOriginalX + ', ' + touchOriginalY;
+        // document.getElementById('debug').innerText = touchOriginalX + ', ' + touchOriginalY;
       }
 
       //double touch
