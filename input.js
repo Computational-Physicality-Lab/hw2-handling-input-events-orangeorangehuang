@@ -246,15 +246,16 @@ targets.forEach((target) => {
 
       // touch
       console.log('touchend', touchState);
-      if (touchState == 'abortDragging') {
-        if (touchFocusTarget !== null) {
-          touchState = 'focused';
-        }
-        else {
-          touchState = 'pending';
-        }
-      }
-      else if (touchState == 'pending' || touchState == 'focused') {
+      // if (touchState == 'abortDragging') {
+      //   if (touchFocusTarget !== null) {
+      //     touchState = 'focused';
+      //   }
+      //   else {
+      //     touchState = 'pending';
+      //   }
+      // }
+      // else 
+      if (touchState == 'pending' || touchState == 'focused') {
         document.getElementById('debug').innerText = 'pending/ focused';
         clearAllSelectBoxes();
         touchFocusTarget = touchTempTarget;
