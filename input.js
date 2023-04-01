@@ -248,6 +248,7 @@ targets.forEach((target) => {
       console.log('touchend', touchState);
       if (touchState == 'abortDragging') {
         if (touchFocusTarget !== null) {
+          document.getElementById('debug').innerText = 'focused';
           touchState = 'focused';
         }
         else {
