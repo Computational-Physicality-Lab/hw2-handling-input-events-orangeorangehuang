@@ -361,8 +361,8 @@ workspace.addEventListener(
         touchState = "resizing"
       } else if (e.touches.length == 3) {
         // Abort
-        touchFocusTarget.style.left = `${originalX}px`;
-        touchFocusTarget.style.top = `${originalY}px`;
+        touchFocusTarget.style.left = `${touchOriginalX}px`;
+        touchFocusTarget.style.top = `${touchOriginalY}px`;
         touchFocusTarget.style.width = `${originalWidth}px`;
         touchFocusTarget.style.height = `${originalHeight}px`;
         touchState = "pending";
