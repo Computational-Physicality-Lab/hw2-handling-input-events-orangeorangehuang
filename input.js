@@ -408,6 +408,7 @@ workspace.addEventListener(
     else if (touchState === 'draggingTarget') {
       if (e.touches.length >= 1) {
         // Abort
+        document.getElementById('debug').innerText = 'abortDragging';
         if (touchFocusTarget !== null) {
           if (touchOperateTarget === touchFocusTarget){
             resizeX = dragOriginalX;
