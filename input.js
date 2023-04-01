@@ -230,9 +230,11 @@ targets.forEach((target) => {
     'touchmove',
     (e) => {
       e.preventDefault();
-      touchOperateTarget = target;
-      touchState = 'draggingTarget';
-      touchDrag(e);
+      if (touchState != 'abortDragging') {
+        touchOperateTarget = target;
+        touchState = 'draggingTarget';
+        touchDrag(e);
+      }
     },
     false
   );
