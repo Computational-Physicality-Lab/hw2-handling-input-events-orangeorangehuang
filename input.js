@@ -271,7 +271,7 @@ targets.forEach((target) => {
         originalWidth = target.offsetWidth;
         originalHeight = target.offsetHeight;
         console.log('touchend: Update focus')
-        document.getElementById('debug').innerText = touchOriginalX;
+        document.getElementById('debug').innerText = touchOriginalX + ', ' + touchOriginalY;
       }
 
       //double touch
@@ -392,14 +392,14 @@ workspace.addEventListener(
     else if (touchState === 'movingTarget') {
       if (e.touches.length >= 1) {
         // Abort
-        touchFocusTarget.style.left = `${originalX}px`;
-        touchFocusTarget.style.top = `${originalY}px`;
+        touchFocusTarget.style.left = `${touchOriginalX}px`;
+        touchFocusTarget.style.top = `${touchOriginalY}px`;
         touchState = 'focused';
       } 
       else if (time - touchStartTimeWS < 200) {
         touchState = 'pending';
-        originalX = touchFocusTarget.offsetLeft;
-        originalY = touchFocusTarget.offsetTop;
+        touchOriginalX = touchFocusTarget.offsetLeft;
+        touchOriginalY = touchFocusTarget.offsetTop;
         touchFocusTarget = null;
         clearAllSelectBoxes();
         document.removeEventListener('touchmove', touchMove);
@@ -413,8 +413,8 @@ workspace.addEventListener(
           if (touchOperateTarget === touchFocusTarget){
             resizeX = dragOriginalX;
             resizeY = dragOriginalY;
-            originalX = touchOperateTarget.offsetLeft;
-            originalY = touchOperateTarget.offsetTop;
+            touchOriginalX = touchOperateTarget.offsetLeft;
+            touchOriginalY = touchOperateTarget.offsetTop;
           }
         }
         touchState = 'abortDragging';
