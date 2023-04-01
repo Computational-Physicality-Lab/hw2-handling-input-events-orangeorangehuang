@@ -255,7 +255,7 @@ targets.forEach((target) => {
         }
       }
       else if (touchState == 'pending' || touchState == 'focused') {
-        document.getElementById('debug').innerText = 'pending/ focused';
+        // document.getElementById('debug').innerText = 'pending/ focused';
         clearAllSelectBoxes();
         touchFocusTarget = touchTempTarget;
         touchFocusTarget.style.backgroundColor = '#00f';
@@ -271,6 +271,7 @@ targets.forEach((target) => {
         originalWidth = target.offsetWidth;
         originalHeight = target.offsetHeight;
         console.log('touchend: Update focus')
+        document.getElementById('debug').innerText = touchOriginalX;
       }
 
       //double touch
@@ -407,7 +408,7 @@ workspace.addEventListener(
     else if (touchState === 'draggingTarget') {
       if (e.touches.length >= 1) {
         // Abort
-        document.getElementById('debug').innerText = 'abortDragging';
+        // document.getElementById('debug').innerText = 'abortDragging';
         if (touchFocusTarget !== null) {
           if (touchOperateTarget === touchFocusTarget){
             resizeX = dragOriginalX;
@@ -422,11 +423,11 @@ workspace.addEventListener(
         touchOperateTarget = null;
       }
       else if (touchFocusTarget !== null) {
-        document.getElementById('debug').innerText = 'abortDragging -> focused';
+        // document.getElementById('debug').innerText = 'abortDragging -> focused';
         touchState = 'focused';
       }
       else {
-        document.getElementById('debug').innerText = 'abortDragging -> pending';
+        // document.getElementById('debug').innerText = 'abortDragging -> pending';
         touchState = 'pending';
       }
     } 
