@@ -255,7 +255,7 @@ targets.forEach((target) => {
         }
       }
       else if (touchState == 'pending' || touchState == 'focused') {
-        document.getElementById('debug').innerText = 'pending or focused';
+        document.getElementById('debug').innerText = 'pending/ focused';
         clearAllSelectBoxes();
         touchFocusTarget = touchTempTarget;
         touchFocusTarget.style.backgroundColor = '#00f';
