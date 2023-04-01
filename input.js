@@ -17,7 +17,7 @@ let originalX = 0;
 let originalY = 0;
 let isDown = false;
 let isClicked = false; // won't reset targets when click workspace
-let click_works = true; // won't change color after moving
+let clickWorks = true; // won't change color after moving
 
 const clearAllSelectBoxes = () => {
   targets.forEach((target) => {
@@ -30,7 +30,7 @@ const move = (e) => {
   if (isDown) {
     target_focus.style.left = `${e.pageX - offsetX}px`;
     target_focus.style.top = `${e.pageY - offsetY}px`;
-    click_works = false;
+    clickWorks = false;
   }
 };
 
@@ -48,17 +48,17 @@ const clickWorkspace = (e) => {
   if (!isClicked) {
     clearAllSelectBoxes();
   }
-  click_works = true;
+  clickWorks = true;
   isClicked = false;
 };
 
 const clickTarget = (e) => {
   e.preventDefault();
-  if (click_works) {
+  if (clickWorks) {
     clearAllSelectBoxes();
     target_focus.style.backgroundColor = '#00f';
   }
-  click_works = true;
+  clickWorks = true;
   isClicked = true;
 };
 
@@ -111,7 +111,7 @@ targets.forEach((target) => {
     (e) => {
       e.preventDefault();
       isDown = false;
-      // click_works = true;
+      // clickWorks = true;
       document.removeEventListener('mousemove', move);
     },
     false
