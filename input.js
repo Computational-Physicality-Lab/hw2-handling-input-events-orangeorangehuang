@@ -425,6 +425,14 @@ workspace.addEventListener(
         touchOperateTarget = null;
         document.getElementById('debug').innerText = 'abort clear';
       }
+      else if (touchFocusTarget !== null) {
+        originalX = touchOperateTarget.offsetLeft;
+        originalY = touchOperateTarget.offsetTop;
+        touchState = 'focused';
+      }
+      else {
+        touchState = 'pending';
+      }
     } 
     else if (touchState === 'touchingTarget') {
       touchState = 'focused';
