@@ -44,7 +44,6 @@ const resetMove = (e) => {
 };
 
 const clickWorkspace = (e) => {
-  console.log('clickWorkspace', click_works, isClicked);
   e.preventDefault();
   if (!isClicked) {
     clearAllSelectBoxes();
@@ -56,7 +55,6 @@ const clickWorkspace = (e) => {
 const clickTarget = (e) => {
   e.preventDefault();
   if (click_works) {
-    console.log('click (' + e.detail + ')');
     clearAllSelectBoxes();
     target_focus.style.backgroundColor = '#00f';
   }
@@ -76,7 +74,6 @@ targets.forEach((target) => {
   target.addEventListener(
     'click',
     (e) => {
-      console.log('click', click_works);
       e.preventDefault();
       target_focus = target;
       clickTarget(e);
@@ -87,7 +84,6 @@ targets.forEach((target) => {
   target.addEventListener(
     'dblclick',
     (e) => {
-      console.log('dblclick');
       e.preventDefault();
       target_focus = target;
       doubleClickTarget(e);
@@ -99,7 +95,6 @@ targets.forEach((target) => {
     'mousedown',
     (e) => {
       e.preventDefault();
-      console.log('mousedown');
       isDown = true;
       target_focus = target;
       offsetX = e.offsetX;
@@ -115,7 +110,6 @@ targets.forEach((target) => {
     'mouseup',
     (e) => {
       e.preventDefault();
-      console.log('mouse up');
       isDown = false;
       // click_works = true;
       document.removeEventListener('mousemove', move);
@@ -129,10 +123,8 @@ workspace.addEventListener('click', clickWorkspace, false);
 document.addEventListener(
   'keydown',
   (e) => {
-    console.log('keydown');
     e.preventDefault();
     if (e.key === 'Escape' || e.key === 'Esc') {
-      console.log('esc');
       resetMove(e);
       return false;
     }
@@ -213,7 +205,6 @@ targets.forEach((target) => {
   target.addEventListener(
     'touchstart',
     (e) => {
-      console.log('touchstart');
       e.preventDefault();
       touchTempTarget = target;
       touchTempX = e.touches[0].clientX - target.offsetLeft;
@@ -245,7 +236,6 @@ targets.forEach((target) => {
       e.preventDefault();
 
       // touch
-      console.log('touchend', touchState);
       if (touchState == 'abortDragging') {
         if (touchFocusTarget !== null) {
           touchState = 'focused';
@@ -255,7 +245,6 @@ targets.forEach((target) => {
         }
       }
       else if (touchState == 'pending' || touchState == 'focused') {
-        // document.getElementById('debug').innerText = 'pending/ focused';
         clearAllSelectBoxes();
         touchFocusTarget = touchTempTarget;
         touchFocusTarget.style.backgroundColor = '#00f';
@@ -270,8 +259,6 @@ targets.forEach((target) => {
         resizeHeight = target.offsetHeight;
         originalWidth = target.offsetWidth;
         originalHeight = target.offsetHeight;
-        console.log('touchend: Update focus')
-        // document.getElementById('debug').innerText = touchOriginalX + ', ' + touchOriginalY;
       }
 
       //double touch
@@ -279,7 +266,6 @@ targets.forEach((target) => {
       let time = date.getTime();
       const time_between_taps = 200; // 200ms
       if (time - lastClick < time_between_taps) {
-        console.log('double Touch', touchState);
         touchState = 'doubleTouchingTarget';
       }
       lastClick = time;
@@ -335,7 +321,6 @@ workspace.addEventListener(
   'touchstart',
   (e) => {
     e.preventDefault();
-    console.log("WS touchstart");
     let date = new Date();
     let time = date.getTime(); 
     touchStartTimeWS = time;
@@ -383,7 +368,6 @@ workspace.addEventListener(
   'touchend',
   (e) => {
     e.preventDefault();
-    console.log("WS touchend");
     let date = new Date();
     let time = date.getTime();
 
@@ -410,7 +394,6 @@ workspace.addEventListener(
     else if (touchState === 'draggingTarget') {
       if (e.touches.length >= 1) {
         // Abort
-        // document.getElementById('debug').innerText = 'abortDragging';
         if (touchFocusTarget !== null) {
           if (touchOperateTarget === touchFocusTarget){
             resizeX = dragOriginalX;
@@ -425,11 +408,9 @@ workspace.addEventListener(
         touchOperateTarget = null;
       }
       else if (touchFocusTarget !== null) {
-        // document.getElementById('debug').innerText = 'abortDragging -> focused';
         touchState = 'focused';
       }
       else {
-        // document.getElementById('debug').innerText = 'abortDragging -> pending';
         touchState = 'pending';
       }
     } 
